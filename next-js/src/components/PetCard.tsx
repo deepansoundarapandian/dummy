@@ -7,7 +7,7 @@ export default function PetCard() {
                 borderRadius: "24px",
                 boxShadow: "0px 4px 32px rgba(0,0,0,0.06)",
                 p: 1,
-                pb:0
+                // pb:0
             }}
         >
             {/* Image */}
