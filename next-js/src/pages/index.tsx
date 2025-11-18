@@ -1,7 +1,9 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import { Container, Typography, Box, Button } from "@mui/material";
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import PetCard from "@/components/PetCard";
+import Grid from '@mui/material/Grid';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,6 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
+
+  const pets = [1, 2, 3, 4, 5, 6, 7, 8];
+
   return (
     <>
       <Head>
@@ -23,57 +28,43 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div
-        className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
+        className={`${geistSans.variable} ${geistMono.variable}`}
       >
-        <main className={styles.main}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js logo"
-            width={100}
-            height={20}
-            priority
-          />
-          <div className={styles.intro}>
-            <h1>To get started, edit the index.tsx file.</h1>
-            <p>
-              Looking for a starting point or more instructions? Head over to{" "}
-              <a
-                href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Templates
-              </a>{" "}
-              or the{" "}
-              <a
-                href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Learning
-              </a>{" "}
-              center.
-            </p>
-          </div>
-          <div className={styles.ctas}>
-            <a
-              className={styles.primary}
-              href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Image
-                className={styles.logo}
-                src="/vercel.svg"
-                alt="Vercel logomark"
-                width={16}
-                height={16}
-              />
-              Deploy Now
-            </a>
-          </div>
-        </main>
+        <Container maxWidth='xl' sx={{ color: 'black', py: '40px', border: 1 }}>
+          <Container sx={{border:1}}>
+            <Container disableGutters >
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px', px: '20px', }}>
+                <Box>
+                  <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
+                    Whats new?
+                  </Typography>
+                  <Typography variant="h3" sx={{ display: 'block', color: 'primary.main' }}>
+                    Take a look at some of our pets
+                  </Typography>
+                </Box>
+                <Box sx={{ alignSelf: 'end' }}>
+                  <Button variant="outlined" endIcon={<ChevronRightIcon />}>View more </Button>
+                </Box>
+              </Box>
+            </Container>
+            <Container >
+              <Box>
+                <Grid container spacing={2} >
+                  {pets.map((pet) => (
+                    <Grid size={{ xl: 3, md: 4, sm: 6 }}
+                      key={pet}
+                    >
+                      <PetCard />
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
+            </Container>
+          </Container>
+          <Container sx={{mt:'50px', border:1, borderRadius:'20px', minHeight:'378px', backgroundImage:"url('/assets/Banner.png')", backgroundPosition:'cover'}}>
+           
+          </Container>
+        </Container>
       </div>
     </>
   );
