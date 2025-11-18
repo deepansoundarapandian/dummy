@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Container, Typography, Box, Button } from "@mui/material";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import PetCard from "@/components/PetCard";
+import PetProduct from "@/components/PetProduct";
 import Grid from '@mui/material/Grid';
 
 const geistSans = Geist({
@@ -30,9 +31,9 @@ export default function Home() {
       <div
         className={`${geistSans.variable} ${geistMono.variable}`}
       >
-        <Container maxWidth='xl' sx={{ color: 'black', py: '40px', border: 1 }}>
-          <Container sx={{border:1}}>
-            <Container disableGutters >
+        <Container maxWidth='xl' sx={{ color: 'black', py: '40px' }}>
+          <Container >
+            <Container disableGutters>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px', px: '20px', }}>
                 <Box>
                   <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
@@ -61,8 +62,34 @@ export default function Home() {
               </Box>
             </Container>
           </Container>
-          <Container sx={{mt:'50px', border:1, borderRadius:'20px', minHeight:'378px', backgroundImage:"url('/assets/Banner.png')", backgroundPosition:'cover'}}>
-           
+          <Container  sx={{ mt: '50px', borderRadius: '20px', minHeight: '378px', backgroundImage: "url('/assets/Banner.png')", backgroundSize: 'cover' }}></Container>
+          <Container disableGutters sx={{ mt: '50px' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px', px: '20px', }}>
+              <Box>
+                <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
+                  Hard to choose right products for your pets?
+                </Typography>
+                <Typography variant="h3" sx={{ display: 'block', color: 'primary.main' }}>
+                  Our Products
+                </Typography>
+              </Box>
+              <Box sx={{ alignSelf: 'end' }}>
+                <Button variant="outlined" endIcon={<ChevronRightIcon />}>View more </Button>
+              </Box>
+            </Box>
+          </Container>
+          <Container >
+            <Box>
+              <Grid container spacing={2} >
+                {pets.map((pet) => (
+                  <Grid size={{ xl: 3, md: 4, sm: 6 }}
+                    key={pet}
+                  >
+                    <PetProduct />
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
           </Container>
         </Container>
       </div>
