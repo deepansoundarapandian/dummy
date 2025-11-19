@@ -1,18 +1,26 @@
 import { Card, CardContent, CardMedia, Box, Typography } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 type PetCardProps = {
     pData: any;
 };
 
 export default function PetCard({ pData }: PetCardProps) {
+
+    const router = useRouter();
+
+    const viewProduct = (id: string) => {
+        router.push(`/products/${id}`);
+    };
+
     return (
         <Card
             sx={{
                 borderRadius: "24px",
                 boxShadow: "0px 4px 32px rgba(0,0,0,0.06)",
                 p: 1,
-            
             }}
+            onClick={() => viewProduct(pData.id.toString())}
         >
             <CardMedia
                 component="img"
@@ -22,13 +30,13 @@ export default function PetCard({ pData }: PetCardProps) {
                     width: "100%",
                     aspectRatio: "1 / 1",
                     objectFit: "contain",
+                    cursor: "pointer",
                     borderRadius: "20px",
                 }}
             />
 
             <CardContent sx={{ px: 1.5, pt: 2 }}>
 
-                {/* Title */}
                 <Typography
                     variant="h6"
                     sx={{ fontWeight: 700, color: "#001A30", fontSize: '16px' }}
@@ -71,3 +79,7 @@ export default function PetCard({ pData }: PetCardProps) {
         </Card>
     );
 }
+
+
+//  const res = await axios(`https://fakestoreapi.com/products/${id}`);
+//         console.log(res);

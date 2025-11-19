@@ -27,17 +27,17 @@ export default function Home() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-  const fakeStore = async () => {
-    const fakestoreData = await axios("https://fakestoreapi.com/products");
-     setData(fakestoreData.data);
-  }
-   fakeStore();
-}, [])
+    const fakeStore = async () => {
+      const fakestoreData = await axios("https://fakestoreapi.com/products");
+      setData(fakestoreData.data);
+    }
+    fakeStore();
+  }, []);
 
   const pets = [1, 2, 3, 4, 5, 6, 7, 8];
-  const petSellers=['/assets/Frame 41.png','/assets/image 6.png','/assets/image 7.png','/assets/image 9.png','/assets/image 10.png','/assets/image 11.png'];
+  const petSellers = ['/assets/Frame 41.png', '/assets/image 6.png', '/assets/image 7.png', '/assets/image 9.png', '/assets/image 10.png', '/assets/image 11.png'];
 
- 
+
 
   return (
     <>
@@ -50,87 +50,211 @@ export default function Home() {
       <div
         className={`${geistSans.variable} ${geistMono.variable}`}
       >
-        <Container maxWidth='xl' sx={{ color: 'black', py: '40px' }}>
-          <Container disableGutters>
-            <Container disableGutters>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px', }}>
-                <Box>
-                  <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
-                    Whats new?
-                  </Typography>
-                  <Typography variant="h3" sx={{ display: 'block', color: 'primary.main' }}>
-                    Take a look at some of our pets
-                  </Typography>
-                </Box>
-                <Box sx={{ alignSelf: 'end' }}>
-                  <Button variant="outlined" endIcon={<ChevronRightIcon />} ><Link href='/productlist'>View more </Link></Button>
-                </Box>
-              </Box>
-            </Container>
-            <Container disableGutters>
-              <Box>
-                <Grid container spacing={2} >
-                  {data.map((product: any) => (
-                    <Grid size={{ xl: 3, md: 4, sm: 6 }}
-                      key={product.id}
-                    >
-                      <PetCard pData={product}/>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Box>
-            </Container>
-          </Container>
-          <Container  sx={{ mt: '50px', borderRadius: '20px', minHeight: '378px', backgroundImage: "url('/assets/Banner.png')", backgroundSize: 'cover' }}></Container>
-          <Container disableGutters sx={{ mt: '50px' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px' }}>
-              <Box>
-                <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
-                  Hard to choose right products for your pets?
-                </Typography>
-                <Typography variant="h3" sx={{ display: 'block', color: 'primary.main' }}>
-                  Our Products
-                </Typography>
-              </Box>
-              <Box sx={{ alignSelf: 'end' }}>
-                <Button variant="outlined" endIcon={<ChevronRightIcon />}>View more </Button>
-              </Box>
-            </Box>
-          </Container>
-          <Container disableGutters>
+        <Container maxWidth='lg' sx={{ color: 'black', py: '40px', mt:'600px' }}>
+
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px', }}>
+
             <Box>
-              <Grid container spacing={2} >
-                {pets.map((pet) => (
-                  <Grid size={{ xl: 3, md: 4, sm: 6 }}
-                    key={pet}
-                  >
-                    <PetProduct />
-                  </Grid>
-                ))}
-              </Grid>
+              <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
+                Whats new?
+              </Typography>
+              <Typography variant="h3" sx={{ display: 'block', color: 'primary.main' }}>
+                Take a look at some of our pets
+              </Typography>
             </Box>
-          </Container>
-          <Container disableGutters sx={{ mt: '60px' }}>
-            <Container disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Box>
-                <Typography variant="caption" sx={{ fontSize: '16px' }}>Proud to be part of <b style={{ color: "#003459", fontSize: '24px', fontWeight: 700 }}>Pet Sellers</b>
-                </Typography>
-              </Box>
-              <Box>
-                <Button variant="outlined" endIcon={<ChevronRightIcon />}>View all our sellers</Button>
-              </Box>
-            </Container>
-            <Container disableGutters sx={{display:'flex', justifyContent:'space-between', my:'30px', alignItems:'center'}}>
-              {
-                petSellers.map((seller,index)=><Box key={index}>
-                <Image src={seller} alt="img" width={88} height={64} />
-                </Box>)
-              }
-            </Container>
-          </Container>
-           <Container sx={{ mt: '50px', borderRadius: '20px', minHeight: '378px', backgroundImage: "url('/assets/Banner.png')", backgroundSize: 'cover' }}></Container>
+
+            <Box sx={{ alignSelf: 'end' }}>
+              <Button variant="outlined" endIcon={<ChevronRightIcon />} ><Link href='/products'>View more </Link></Button>
+            </Box>
+
+          </Box>
+
+          <Box>
+            <Grid container spacing={2} >
+              {data.map((product: any) => (
+                <Grid size={{ xl: 3, md: 4, sm: 6, xs: 12 }}
+                  key={product.id}
+                >
+                  <PetCard pData={product} />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+
+          <Box sx={{ mt: '50px', borderRadius: '20px', minHeight: '378px', backgroundImage: "url('/assets/Banner.png')", backgroundSize: 'cover' }}></Box>
+
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px', mt: '50px' }}>
+
+            <Box>
+              <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
+                Hard to choose right products for your pets?
+              </Typography>
+              <Typography variant="h3" sx={{ display: 'block', color: 'primary.main' }}>
+                Our Products
+              </Typography>
+            </Box>
+
+            <Box sx={{ alignSelf: 'end' }}>
+              <Button variant="outlined" endIcon={<ChevronRightIcon />}>View more </Button>
+            </Box>
+
+          </Box>
+
+          <Box>
+
+            <Grid container spacing={2} >
+              {pets.map((pet) => (
+                <Grid size={{ xl: 3, md: 4, sm: 6, xs: 12 }}
+                  key={pet}
+                >
+                  <PetProduct />
+                </Grid>
+              ))}
+            </Grid>
+
+          </Box>
+
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: '60px' }}>
+
+            <Box>
+              <Typography variant="caption" sx={{ fontSize: '16px' }}>Proud to be part of <b style={{ color: "#003459", fontSize: '24px', fontWeight: 700 }}>Pet Sellers</b>
+              </Typography>
+            </Box>
+
+            <Box>
+              <Button variant="outlined" endIcon={<ChevronRightIcon />}>View all our sellers</Button>
+            </Box>
+
+          </Box>
+
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', my: '30px', alignItems: 'center' }}>
+            {
+              petSellers.map((seller, index) => (
+                <Box key={index}>
+                  <Image src={seller} alt="img" width={88} height={64} />
+                </Box>
+              ))
+            }
+          </Box>
+
+          <Box sx={{ mt: '50px', borderRadius: '20px', minHeight: '378px', backgroundImage: "url('/assets/Banner.png')", backgroundSize: 'cover' }}></Box>
+
         </Container>
       </div>
     </>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// <Container maxWidth='xl' sx={{ color: 'black', py: '40px' }}>
+//   <Container disableGutters>
+//     <Container disableGutters>
+//       <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px', }}>
+//         <Box>
+//           <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
+//             Whats new?
+//           </Typography>
+//           <Typography variant="h3" sx={{ display: 'block', color: 'primary.main' }}>
+//             Take a look at some of our pets
+//           </Typography>
+//         </Box>
+//         <Box sx={{ alignSelf: 'end' }}>
+//           <Button variant="outlined" endIcon={<ChevronRightIcon />} ><Link href='/productlist'>View more </Link></Button>
+//         </Box>
+//       </Box>
+//     </Container>
+//     <Container disableGutters>
+//       <Box>
+//         <Grid container spacing={2} >
+//           {data.map((product: any) => (
+//             <Grid size={{ xl: 3, md: 4, sm: 6 }}
+//               key={product.id}
+//             >
+//               <PetCard pData={product} />
+//             </Grid>
+//           ))}
+//         </Grid>
+//       </Box>
+//     </Container>
+//   </Container>
+//   <Container sx={{ mt: '50px', borderRadius: '20px', minHeight: '378px', backgroundImage: "url('/assets/Banner.png')", backgroundSize: 'cover' }}></Container>
+//   <Container disableGutters sx={{ mt: '50px' }}>
+//     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px' }}>
+//       <Box>
+//         <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
+//           Hard to choose right products for your pets?
+//         </Typography>
+//         <Typography variant="h3" sx={{ display: 'block', color: 'primary.main' }}>
+//           Our Products
+//         </Typography>
+//       </Box>
+//       <Box sx={{ alignSelf: 'end' }}>
+//         <Button variant="outlined" endIcon={<ChevronRightIcon />}>View more </Button>
+//       </Box>
+//     </Box>
+//   </Container>
+//   <Container disableGutters>
+//     <Box>
+//       <Grid container spacing={2} >
+//         {pets.map((pet) => (
+//           <Grid size={{ xl: 3, md: 4, sm: 6 }}
+//             key={pet}
+//           >
+//             <PetProduct />
+//           </Grid>
+//         ))}
+//       </Grid>
+//     </Box>
+//   </Container>
+//   <Container disableGutters sx={{ mt: '60px' }}>
+//     <Container disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
+//       <Box>
+//         <Typography variant="caption" sx={{ fontSize: '16px' }}>Proud to be part of <b style={{ color: "#003459", fontSize: '24px', fontWeight: 700 }}>Pet Sellers</b>
+//         </Typography>
+//       </Box>
+//       <Box>
+//         <Button variant="outlined" endIcon={<ChevronRightIcon />}>View all our sellers</Button>
+//       </Box>
+//     </Container>
+//     <Container disableGutters sx={{ display: 'flex', justifyContent: 'space-between', my: '30px', alignItems: 'center' }}>
+//       {
+//         petSellers.map((seller, index) => <Box key={index}>
+//           <Image src={seller} alt="img" width={88} height={64} />
+//         </Box>)
+//       }
+//     </Container>
+//   </Container>
+//   <Container sx={{ mt: '50px', borderRadius: '20px', minHeight: '378px', backgroundImage: "url('/assets/Banner.png')", backgroundSize: 'cover' }}></Container>
+// </Container> 
