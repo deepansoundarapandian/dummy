@@ -33,6 +33,12 @@ const theme = createTheme({
             lineHeight: '36px',
             letterSpacing: 0
         },
+        h4:{
+             fontWeight: 700,
+            fontSize: '20px',
+            lineHeight: '32px',
+            letterSpacing: 0
+        }
     },
     components: {
         MuiButton: {

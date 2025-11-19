@@ -3,7 +3,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 import theme from '../themes/theme'
 import "@/styles/globals.css";
 import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/HeroSection";
 import Footer from "@/components/Footer";
 import type { AppProps } from "next/app";
 import { usePathname } from "next/navigation";
@@ -13,34 +12,50 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const pathname = usePathname();
 
+  const backgroundProducts = {
+    height: "378px",
+    backgroundImage: "url('/assets/Banner4.png')",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: 'center',
+    overflow: "hidden",
+    backgroundSize: "contain",
+    position: 'absolute',
+    top: '150px',
+    left: '50%',
+    transform: 'translateX(-50%)'
+
+  }
+
+
+  const backgroundHome = {
+    height: "695px",
+    backgroundImage: "url('/assets/Herro Banner.png')",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: 'center',
+    overflow: "hidden",
+    backgroundSize: "cover",
+    position: 'absolute',
+    left: '50%',
+    transform: 'translateX(-50%)'
+
+  }
+
   const bgImage =
     pathname === "/"
-      ? "/assets/good-humored-woman-holds-dog-laughing-pink-background-emotional-sort-haired-girl-grey-hoodie-poses-with-corgi-isolated 1.png"
-      : pathname === "/productlist"? "/assets/group-portrait-adorable-puppies 1.png" : '';
+      ? backgroundHome
+      : pathname === "/products" ? backgroundProducts : '';
 
-  const backgroundUrl = {
-    height: "695px",
-    backgroundImage: `url('${bgImage}')`,
-    backgroundColor: "secondary.main",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "bottom right",
-    overflow: "hidden",
-    backgroundSize: "800px auto",
-  }
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Container
-          maxWidth="xl" 
-          sx={backgroundUrl}
-        >
+        <Container maxWidth="xl" sx={{ ...bgImage }}></Container>
+        <Container maxWidth="xl">
           <Navbar />
-          <HeroSection />
+          <Component {...pageProps} />
+          <Footer />
         </Container>
-        <Component {...pageProps} />
-        <Footer />
       </ThemeProvider>
     </>
   );

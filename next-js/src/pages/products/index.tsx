@@ -35,7 +35,7 @@ const ProductList = () => {
   const totalPages = Math.ceil(allProducts.length / limit);
 
   return (
-    <Container maxWidth='xl' sx={{ color: 'black', mt: '30px' }}>
+    <Container maxWidth='xl' sx={{ color: 'black', mt: '530px' }}>
 
       <Container disableGutters>
         <Box>
