@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const bgImage =
     pathname === "/"
       ? "/assets/good-humored-woman-holds-dog-laughing-pink-background-emotional-sort-haired-girl-grey-hoodie-poses-with-corgi-isolated 1.png"
-      : "";
+      : pathname === "/productlist"? "/assets/group-portrait-adorable-puppies 1.png" : '';
 
   const backgroundUrl = {
     height: "695px",
@@ -26,8 +26,6 @@ export default function App({ Component, pageProps }: AppProps) {
     backgroundPosition: "bottom right",
     overflow: "hidden",
     backgroundSize: "800px auto",
-    // border:"1px solid black"
-    // px:'50px'
   }
 
   return (

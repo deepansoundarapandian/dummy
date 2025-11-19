@@ -1,3 +1,4 @@
+"use client"
 import Head from "next/head";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Container, Typography, Box, Button } from "@mui/material";
@@ -5,6 +6,10 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import PetCard from "@/components/PetCard";
 import PetProduct from "@/components/PetProduct";
 import Grid from '@mui/material/Grid';
+import Image from "next/image";
+import axios from "axios";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,9 +21,23 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+
 export default function Home() {
 
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+  const fakeStore = async () => {
+    const fakestoreData = await axios("https://fakestoreapi.com/products");
+     setData(fakestoreData.data);
+  }
+   fakeStore();
+}, [])
+
   const pets = [1, 2, 3, 4, 5, 6, 7, 8];
+  const petSellers=['/assets/Frame 41.png','/assets/image 6.png','/assets/image 7.png','/assets/image 9.png','/assets/image 10.png','/assets/image 11.png'];
+
+ 
 
   return (
     <>
@@ -32,9 +51,9 @@ export default function Home() {
         className={`${geistSans.variable} ${geistMono.variable}`}
       >
         <Container maxWidth='xl' sx={{ color: 'black', py: '40px' }}>
-          <Container >
+          <Container disableGutters>
             <Container disableGutters>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px', px: '20px', }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px', }}>
                 <Box>
                   <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
                     Whats new?
@@ -44,18 +63,18 @@ export default function Home() {
                   </Typography>
                 </Box>
                 <Box sx={{ alignSelf: 'end' }}>
-                  <Button variant="outlined" endIcon={<ChevronRightIcon />}>View more </Button>
+                  <Button variant="outlined" endIcon={<ChevronRightIcon />} ><Link href='/productlist'>View more </Link></Button>
                 </Box>
               </Box>
             </Container>
-            <Container >
+            <Container disableGutters>
               <Box>
                 <Grid container spacing={2} >
-                  {pets.map((pet) => (
+                  {data.map((product: any) => (
                     <Grid size={{ xl: 3, md: 4, sm: 6 }}
-                      key={pet}
+                      key={product.id}
                     >
-                      <PetCard />
+                      <PetCard pData={product}/>
                     </Grid>
                   ))}
                 </Grid>
@@ -64,7 +83,7 @@ export default function Home() {
           </Container>
           <Container  sx={{ mt: '50px', borderRadius: '20px', minHeight: '378px', backgroundImage: "url('/assets/Banner.png')", backgroundSize: 'cover' }}></Container>
           <Container disableGutters sx={{ mt: '50px' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px', px: '20px', }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px' }}>
               <Box>
                 <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
                   Hard to choose right products for your pets?
@@ -78,7 +97,7 @@ export default function Home() {
               </Box>
             </Box>
           </Container>
-          <Container >
+          <Container disableGutters>
             <Box>
               <Grid container spacing={2} >
                 {pets.map((pet) => (
@@ -91,6 +110,25 @@ export default function Home() {
               </Grid>
             </Box>
           </Container>
+          <Container disableGutters sx={{ mt: '60px' }}>
+            <Container disableGutters sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Box>
+                <Typography variant="caption" sx={{ fontSize: '16px' }}>Proud to be part of <b style={{ color: "#003459", fontSize: '24px', fontWeight: 700 }}>Pet Sellers</b>
+                </Typography>
+              </Box>
+              <Box>
+                <Button variant="outlined" endIcon={<ChevronRightIcon />}>View all our sellers</Button>
+              </Box>
+            </Container>
+            <Container disableGutters sx={{display:'flex', justifyContent:'space-between', my:'30px', alignItems:'center'}}>
+              {
+                petSellers.map((seller,index)=><Box key={index}>
+                <Image src={seller} alt="img" width={88} height={64} />
+                </Box>)
+              }
+            </Container>
+          </Container>
+           <Container sx={{ mt: '50px', borderRadius: '20px', minHeight: '378px', backgroundImage: "url('/assets/Banner.png')", backgroundSize: 'cover' }}></Container>
         </Container>
       </div>
     </>

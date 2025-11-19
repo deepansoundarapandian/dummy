@@ -1,28 +1,31 @@
 import { Card, CardContent, CardMedia, Box, Typography } from "@mui/material";
 
-export default function PetCard() {
+type PetCardProps = {
+    pData: any;
+};
+
+export default function PetCard({ pData }: PetCardProps) {
     return (
         <Card
             sx={{
                 borderRadius: "24px",
                 boxShadow: "0px 4px 32px rgba(0,0,0,0.06)",
                 p: 1,
-                // pb:0
+            
             }}
         >
-            {/* Image */}
             <CardMedia
                 component="img"
-                image="/assets/image 2.png"
+                image={pData.image}
                 alt="Pet"
                 sx={{
                     width: "100%",
-                    objectFit: "cover",
-                    borderRadius: '20px'
+                    aspectRatio: "1 / 1",
+                    objectFit: "contain",
+                    borderRadius: "20px",
                 }}
             />
 
-            {/* Text Content */}
             <CardContent sx={{ px: 1.5, pt: 2 }}>
 
                 {/* Title */}
@@ -30,16 +33,15 @@ export default function PetCard() {
                     variant="h6"
                     sx={{ fontWeight: 700, color: "#001A30", fontSize: '16px' }}
                 >
-                    MO231 - Pomeranian White
+                    {pData.title.slice(0, 20)}
+
                 </Typography>
 
-                {/* Gene & Age */}
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: '1px', fontWeight:400, fontSize:'14px' }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: '1px', fontWeight: 400, fontSize: '14px' }}>
                     <Typography sx={{ color: "#667479", fontSize: "14px" }}>
-                        Gene: Male
+                        {pData.category}
                     </Typography>
 
-                    {/* Dot */}
                     <Box
                         sx={{
                             width: 4,
@@ -49,12 +51,12 @@ export default function PetCard() {
                         }}
                     />
 
-                    <Typography sx={{ color: "#5C6A79", fontSize: "12px", fontWeight:700 }}>
-                        Age: 02 months
+                    <Typography sx={{ color: "#5C6A79", fontSize: "12px", fontWeight: 700 }}>
+                        {pData.rating.rate}
                     </Typography>
                 </Box>
 
-                {/* Price */}
+
                 <Typography
                     sx={{
                         fontWeight: 700,
@@ -63,7 +65,7 @@ export default function PetCard() {
                         color: "#00171F",
                     }}
                 >
-                    $199.00
+                    {pData.price}
                 </Typography>
             </CardContent>
         </Card>
