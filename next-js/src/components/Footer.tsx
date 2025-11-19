@@ -12,8 +12,8 @@ const Footer = () => {
   const list = ["Home", "Category", "About", "Contact"];
   const media = [{ title: <FacebookRoundedIcon /> }, { title: <InstagramIcon /> }, { title: <TwitterIcon /> }, { title: <YouTubeIcon /> }]
   return (
-    <Container maxWidth="xl" sx={{ backgroundColor: 'secondary.main', borderTopLeftRadius: '20px', borderTopRightRadius: '20px', mt: '20px', pt:'80px' }}>
-      <Container maxWidth='lg' sx={{ pb: '40px' }}>
+    <Container disableGutters maxWidth="xl" sx={{ backgroundColor: 'secondary.main', borderTopLeftRadius: '20px', borderTopRightRadius: '20px', mt: '20px', pt:'80px' }}>
+      <Container disableGutters maxWidth='lg' sx={{ pb: '40px' }}>
         <Box sx={{ backgroundColor: 'primary.main', padding: 4, display: 'flex', gap: '60px', borderRadius: 4,  }}>
           <Typography variant="h5" gutterBottom sx={{ color: 'text.primary', textTransform: 'capitalize', fontWeight: 700, lineHeight: '36px' }}>
             Register now so you don't <br /> miss our programs
@@ -59,7 +59,7 @@ const Footer = () => {
           </Box>
         </Box>
       </Container>
-      <Container sx={{ color: '#667479', display:'flex', justifyContent:'space-between', alignItems:'center',pb:'20px' }}>
+      <Container disableGutters sx={{ color: '#667479', display:'flex', justifyContent:'space-between', alignItems:'center',pb:'20px' }}>
         <Box>
           <Typography variant="caption" >
             © 2022 Monito. All rights reserved.
