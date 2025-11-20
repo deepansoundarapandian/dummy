@@ -1,5 +1,5 @@
 "use client";
-import { Box, Grid, Typography, Button, Stack, CardMedia, Paper, IconButton } from "@mui/material";
+import { Box, Grid, Typography, Button, Stack, CardMedia, Paper, IconButton, Card, Breadcrumbs, Link } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -9,11 +9,38 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import PetCard from "@/components/PetCard";
 
 export default function ProductDetailsPage() {
   const router = useRouter();
   const { productDetail } = router.query;
   const [product, setProduct] = useState<any>(null);
+
+  const customerImages = [
+    "/assets/Frame 118.png",
+    "/assets/Frame 120.png",
+    "/assets/Frame 121.png",
+    "/assets/Frame 122.png",
+    "/assets/image 22.png",
+  ];
+
+
+  const dummyData = {
+    "id": 1,
+    "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    "price": 109.95,
+    "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
+    "category": "men's clothing",
+    "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png",
+    "rating": {
+      "rate": 3.9,
+      "count": 120
+    }
+  }
+
+  const crumb = [" Home", "Dog", "Large Dog", "Shiba Inu Sepia"];
+
+  const loop = [1, 2, 3, 4];
 
   useEffect(() => {
     if (!productDetail) return;
@@ -27,8 +54,9 @@ export default function ProductDetailsPage() {
   if (!product) return <div>Loading...</div>;
 
   return (
-    <Container sx={{ border: "1px solid #EEE", color: 'black', borderRadius: '20px', mt: '50px' }}>
-      <Box sx={{ mt: 3, mb: 5 }}>
+    <Container sx={{ color: 'black', my: '50px' }}>
+
+      <Box sx={{ mt: 3, mb: 5, border: "1px solid #EEE", borderRadius: '20px', p: 2 }}>
         <Grid container spacing={4}>
           {/* LEFT SIDE: MAIN IMAGE + THUMBNAILS */}
           <Grid size={{ xs: 12, md: 6 }} >
@@ -138,6 +166,15 @@ export default function ProductDetailsPage() {
 
           {/* RIGHT SIDE: DETAILS */}
           <Grid size={{ xs: 12, md: 6 }}>
+
+            <Breadcrumbs separator="›" aria-label="breadcrumb" sx={{my:2, fontSize:'14px', fontWeight:400}}>
+              {
+                crumb.map(c => <Link underline="hover" color="inherit" href="#">
+                  {c}
+                </Link>)
+              }
+            </Breadcrumbs>
+
             <Typography variant="h3" sx={{ color: '#00171F' }}>
               {product.title}
             </Typography>
@@ -200,6 +237,114 @@ export default function ProductDetailsPage() {
 
           </Grid>
         </Grid>
+      </Box>
+
+      <Box>
+
+        <Typography
+          variant="h3"
+          sx={{
+            mb: 2,
+          }}
+        >
+          Our lovely customer
+        </Typography>
+
+        <Box
+          sx={{
+            display: "flex",
+            gap: 3,
+            overflowX: "auto",
+            scrollbarWidth: "none",
+            "&::-webkit-scrollbar": { display: "none" },
+            pb: 2,
+          }}
+        >
+          {customerImages.map((img, i) => (
+            <Card
+              key={i}
+              sx={{
+                minWidth: 248,
+                height: 320,
+                borderRadius: "20px",
+                overflow: "hidden",
+                boxShadow: "0px 4px 20px rgba(0,0,0,0.08)",
+                flexShrink: 0,
+              }}
+            >
+              <CardMedia
+                component="img"
+                src={img}
+                alt={`customer-${i}`}
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
+            </Card>
+          ))}
+        </Box>
+
+        {/* Pagination Dots */}
+        <Box
+          sx={{
+            mt: 3,
+            display: "flex",
+            justifyContent: "center",
+            gap: 1,
+          }}
+        >
+          <Box
+            sx={{
+              width: 10,
+              height: 10,
+              borderRadius: "50%",
+              bgcolor: "#001F1F",
+            }}
+          />
+          <Box
+            sx={{
+              width: 10,
+              height: 10,
+              borderRadius: "50%",
+              bgcolor: "#D9D9D9",
+            }}
+          />
+          <Box
+            sx={{
+              width: 10,
+              height: 10,
+              borderRadius: "50%",
+              bgcolor: "#D9D9D9",
+            }}
+          />
+        </Box>
+      </Box>
+
+      <Box sx={{ mt: '60px' }}>
+
+        <Box >
+          <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
+            Whats new?
+          </Typography>
+          <Typography variant="h3" sx={{ display: 'block', color: 'primary.main' }}>
+            Take a look at some of our pets
+          </Typography>
+        </Box>
+
+        <Box sx={{ mt: 3 }}>
+          <Grid container spacing={2} >
+            {loop.map((product: any) => (
+              <Grid size={{ xl: 3, md: 4, sm: 6, xs: 12 }}
+                key={product}
+              >
+                <PetCard pData={dummyData} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+
       </Box>
     </Container>
   );

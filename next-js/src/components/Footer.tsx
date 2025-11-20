@@ -23,7 +23,7 @@ const Footer = () => {
             </Typography>
             <Box sx={{ backgroundColor: '#FFFFFF', flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '10px', height: '72px', borderRadius: '14px', padding: '12px' }}>
               <OutlinedInput placeholder="Enter your Email" sx={{ color: '#99A2A5', borderRadius: '8px', border: '1px', flexGrow: 1, height: '48px', fontSize: '14px', fontWeight: 400 }} />
-              <CustomButton props={'Subscribe Now'} />
+              <Box><CustomButton props={'Subscribe Now'} /></Box>
             </Box>
           </Box>
 

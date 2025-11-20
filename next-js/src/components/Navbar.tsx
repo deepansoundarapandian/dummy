@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-const Navbar = () => {
+const Navbar = ({ onOpenLogin }: any) => {
     
     const list = ["Home", "Category", "About", "Contact"];
 
@@ -60,6 +60,7 @@ const Navbar = () => {
                         </List>
                         <Button
                             variant="contained" sx={{color:'text.primary', fontWeight:700}}
+                            onClick={onOpenLogin}
                         >
                             Login
                         </Button>

@@ -7,8 +7,17 @@ import Footer from "@/components/Footer";
 import type { AppProps } from "next/app";
 import { usePathname } from "next/navigation";
 import Container from "@mui/material/Container";
+import LoginModal from "@/components/Login";
+import SignupModal from "@/components/Signup";
+import { useState } from "react";
+import VerifyMail from "../components/VerifyMail";
+import { UserDataProvider } from "@/context/UserData";
 
 export default function App({ Component, pageProps }: AppProps) {
+
+  const [openLogin, setOpenLogin] = useState(false);
+  const [openSignup, setOpenSignup] = useState(false);
+  const [openVerifyMail, setOpenVerifyMail] = useState(false);
 
   const pathname = usePathname();
 
@@ -45,16 +54,43 @@ export default function App({ Component, pageProps }: AppProps) {
       ? backgroundHome
       : pathname === "/products" ? backgroundProducts : '';
 
+  const signUp = () => {
+    setOpenSignup(true);
+    setOpenLogin(false);
+  }
+
+  const login = () => {
+    setOpenLogin(true);
+    setOpenSignup(false);
+  }
+
+
 
   return (
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container maxWidth="xl" sx={{ ...bgImage }}></Container>
+
         <Container maxWidth="xl">
-          <Navbar />
-          <Component {...pageProps} />
+
+          <UserDataProvider>
+
+            <Navbar onOpenLogin={() => setOpenLogin(true)} />
+
+
+            <LoginModal open={openLogin} onClose={() => setOpenLogin(false)} onOpenSignup={signUp} />
+
+            <SignupModal open={openSignup} onClose={() => setOpenSignup(false)} onOpenLogin={login} openMail={() => setOpenVerifyMail(true)}/>
+
+            <VerifyMail  open={openVerifyMail} onClose={() => setOpenVerifyMail(false)}/>
+
+            <Component {...pageProps} />
+
+          </UserDataProvider>
+
           <Footer />
+
         </Container>
       </ThemeProvider>
     </>
