@@ -59,8 +59,6 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
             return;
         }
 
-        // console.log("FORM DATA:", formData);
-
         setNewUser((prev: any) => [...prev, formData]);
         setFormData({
             name: "",
@@ -102,7 +100,7 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                             backgroundImage: "url('/assets/Herro Banner5.png')",
                             backgroundSize: "cover",
                             backgroundPosition: "right",
-                            display: { xs: "block", md: "block" },
+                            display: { xs: "none", md: "block" },
                         }}
                     />
 

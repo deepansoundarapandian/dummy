@@ -31,13 +31,14 @@ export default function App({ Component, pageProps }: AppProps) {
     position: 'absolute',
     top: '150px',
     left: '50%',
-    transform: 'translateX(-50%)'
+    transform: 'translateX(-50%)',
+    display:{xs:'none', md:'block'}
 
   }
 
 
   const backgroundHome = {
-    height: "695px",
+    height: {xs:'350px', md:"695px"},
     backgroundImage: "url('/assets/Herro Banner.png')",
     backgroundRepeat: "no-repeat",
     backgroundPosition: 'center',
@@ -53,6 +54,7 @@ export default function App({ Component, pageProps }: AppProps) {
     pathname === "/"
       ? backgroundHome
       : pathname === "/products" ? backgroundProducts : '';
+
 
   const signUp = () => {
     setOpenSignup(true);

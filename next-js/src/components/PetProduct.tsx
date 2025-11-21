@@ -1,5 +1,4 @@
 import { Box, Typography, Card, CardContent, CardMedia } from "@mui/material";
-import Image from "next/image";
 import GiftIcon from "@mui/icons-material/CardGiftcard";
 
 export default function PetProduct() {

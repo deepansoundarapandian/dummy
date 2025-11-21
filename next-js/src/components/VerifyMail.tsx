@@ -14,14 +14,22 @@ import { useEffect, useRef, useState } from "react";
 
 export default function VerifyMail({ open, onClose }: any) {
 
-    const [otp, setOtp] = useState("");                        // stores generated OTP
-    const [snackOpen, setSnackOpen] = useState(false);         // snackbar visibility
-    const [inputs, setInputs] = useState(["", "", "", ""]);    // input box values
-    const inputRefs = useRef<any>([]);                         // refs for auto-focus
+    const [otp, setOtp] = useState("");
+    const [snackOpen, setSnackOpen] = useState(false);
+    const [inputs, setInputs] = useState(["", "", "", ""]);
+    const inputRefs = useRef<Array<HTMLInputElement | null>>([
+        null, null, null, null
+    ]);
 
     useEffect(() => {
-        if (open) generateOtp();
+        if (open) {
+            generateOtp();
+           setTimeout(() => {
+             inputRefs.current[0]?.focus();
+           },50);
+        }
     }, [open]);
+
 
 
     const generateOtp = () => {
@@ -29,33 +37,43 @@ export default function VerifyMail({ open, onClose }: any) {
         setOtp(newOtp);
         setSnackOpen(true);
         console.log("OTP:", newOtp);
+
+        setInputs(["", "", "", ""]);
+
+        inputRefs.current[0]?.focus();
     };
 
     const handleChange = (index: number, value: string) => {
         if (/^\d?$/.test(value)) {
-            const newArr = [...inputs];
-            newArr[index] = value;
-            setInputs(newArr);
+            const updated = [...inputs];
+            updated[index] = value;
+            setInputs(updated);
 
-            // Move to next input automatically
-            if (value && index < 4) {
-                inputRefs.current[index + 1].focus();
+            // Auto move to next input
+            if (value && index < 3) {
+                inputRefs.current[index + 1]?.focus();
             }
         }
     };
 
-    const handleKeyDown = (index: number, e: any) => {
-        if (e.key === "Backspace" && !inputs[index] && index > 0) {
-            inputRefs.current[index - 1].focus();
+    const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
+        if (e.key === "Backspace" && inputs[index] === "" && index > 0) {
+            inputRefs.current[index - 1]?.focus();
         }
     };
 
     const handleVerify = () => {
         if (inputs.join("") === otp) {
             alert("OTP Verified Successfully! 🎉");
+            onClose();
         } else {
-            alert("Incorrect OTP ");
+            alert("Incorrect OTP");
         }
+
+        setInputs(["", "", "", ""]);
+
+        inputRefs.current[0]?.focus();
+
     };
 
 
@@ -94,6 +112,7 @@ export default function VerifyMail({ open, onClose }: any) {
                             backgroundImage: "url('/assets/Herro Banner5.png')",
                             backgroundSize: "cover",
                             backgroundPosition: "center",
+                             display: { xs: "none", md: "block" },
                         }}
                     />
 
@@ -108,7 +127,7 @@ export default function VerifyMail({ open, onClose }: any) {
                         {/* Close */}
                         <IconButton
                             sx={{ position: "absolute", top: 16, right: 16 }}
-                              onClick={onClose}
+                            onClick={onClose}
                         >
                             <CloseIcon />
                         </IconButton>
@@ -129,6 +148,7 @@ export default function VerifyMail({ open, onClose }: any) {
                                 color: "#00171F",
                                 fontSize: { xs: "22px", md: "28px" },
                                 mt: "20px",
+                                 textAlign:{ xs: 'center', md: 'start' }
                             }}
                         >
                             Verify Your Email
@@ -140,13 +160,14 @@ export default function VerifyMail({ open, onClose }: any) {
                                 my: 2,
                                 color: "grey.600",
                                 fontSize: { xs: "14px", md: "16px" },
+                                  textAlign:{ xs: 'center', md: 'start' }
                             }}
                         >
                             Please enter 4 digit OTP sent on email address
                         </Typography>
 
                         {/* -------- EMAIL ROW -------- */}
-                        <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+                        <Box sx={{ display: "flex", alignItems: "center", mb: 3, justifyContent: { xs: 'center', md: 'start' }}}>
                             <EditSquareIcon sx={{ color: "#FFA733", mr: 1, width: '18px', height: '18px' }} />
                             <Typography sx={{ fontSize: "15px", color: "#D6920F" }}>
                                 example@email.com
@@ -154,8 +175,8 @@ export default function VerifyMail({ open, onClose }: any) {
                         </Box>
 
                         {/* -------- OTP INPUT BOXES -------- */}
-                        <Box sx={{ display: "flex", gap: 2, mb: 4 }}>
-                            {[1, 2, 3, 4].map((i) => (
+                        <Box sx={{ display: "flex", gap: 2, mb: 4 ,  justifyContent: { xs: 'center', md: 'start' },}}>
+                            {[0, 1, 2, 3].map((i) => (
                                 <TextField
                                     key={i}
                                     inputRef={(el) => (inputRefs.current[i] = el)}
@@ -182,6 +203,7 @@ export default function VerifyMail({ open, onClose }: any) {
                                         "&:hover fieldset": {
                                             borderColor: "#DADADA !important",
                                         },
+                                       
                                     }}
                                 />
                             ))}

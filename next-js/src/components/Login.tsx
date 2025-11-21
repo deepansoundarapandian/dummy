@@ -17,7 +17,7 @@ import { useState } from "react";
 
 export default function LoginModal({ open, onClose, onOpenSignup }: any) {
 
-    const { newUser } = userData();
+    const { newUser, setLoggedIn } = userData();
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
 
@@ -46,6 +46,10 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
 
         if (existingUser) {
             setSnackbarOpen(true);
+            setLoggedIn({
+                userName: existingUser.name,
+                loggedIn: true
+            })
             onClose();
         } else {
             alert("Invalid email or password!");
@@ -84,7 +88,7 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
                             backgroundImage: "url('/assets/Herro Banner5.png')",
                             backgroundSize: "cover",
                             backgroundPosition: "center",
-                            display: { xs: "block", md: "block" },
+                            display: { xs: "none", md: "block" },
                         }}
                     />
 
