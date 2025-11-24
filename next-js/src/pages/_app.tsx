@@ -12,6 +12,7 @@ import SignupModal from "@/components/Signup";
 import { useState } from "react";
 import VerifyMail from "../components/VerifyMail";
 import { UserDataProvider } from "@/context/UserData";
+import { useMediaQuery } from "@mui/material"
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -20,6 +21,9 @@ export default function App({ Component, pageProps }: AppProps) {
   const [openVerifyMail, setOpenVerifyMail] = useState(false);
 
   const pathname = usePathname();
+
+  // const isMobile = useMediaQuery(theme.breakpoints.down("md"), { noSsr: true });
+
 
   const backgroundProducts = {
     height: "378px",
@@ -32,13 +36,13 @@ export default function App({ Component, pageProps }: AppProps) {
     top: '150px',
     left: '50%',
     transform: 'translateX(-50%)',
-    display:{xs:'none', md:'block'}
+    display: { xs: 'none', md: 'block' }
 
   }
 
 
   const backgroundHome = {
-    height: {xs:'350px', md:"695px"},
+    height: { xs: '350px', md: "695px" },
     backgroundImage: "url('/assets/Herro Banner.png')",
     backgroundRepeat: "no-repeat",
     backgroundPosition: 'center',
@@ -74,7 +78,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <CssBaseline />
         <Container maxWidth="xl" sx={{ ...bgImage }}></Container>
 
-        <Container maxWidth="xl">
+        <Container maxWidth="xl" >
 
           <UserDataProvider>
 
@@ -83,9 +87,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
             <LoginModal open={openLogin} onClose={() => setOpenLogin(false)} onOpenSignup={signUp} />
 
-            <SignupModal open={openSignup} onClose={() => setOpenSignup(false)} onOpenLogin={login} openMail={() => setOpenVerifyMail(true)}/>
+            <SignupModal open={openSignup} onClose={() => setOpenSignup(false)} onOpenLogin={login} openMail={() => setOpenVerifyMail(true)} />
 
-            <VerifyMail  open={openVerifyMail} onClose={() => setOpenVerifyMail(false)}/>
+            <VerifyMail open={openVerifyMail} onClose={() => setOpenVerifyMail(false)} />
 
             <Component {...pageProps} />
 

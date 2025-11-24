@@ -1,4 +1,5 @@
 "use client"
+
 import Head from "next/head";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Container, Typography, Box, Button } from "@mui/material";
@@ -47,10 +48,11 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <div
         className={`${geistSans.variable} ${geistMono.variable}`}
       >
-        <Container maxWidth='lg' sx={{ color: 'black', py: '40px', mt: {xs:'250px', md:'600px'} }}>
+        <Container maxWidth='lg' sx={{ color: 'black', py: '40px', mt: { xs: '250px', md: '600px' } }}>
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px', }}>
 
@@ -58,12 +60,12 @@ export default function Home() {
               <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
                 Whats new?
               </Typography>
-              <Typography variant="h3" sx={{ display: 'block', color: 'primary.main', fontSize:{xs:'20px'} }}>
+              <Typography variant="h3" sx={{ display: 'block', color: 'primary.main', fontSize: { xs: '20px' } }}>
                 Take a look at some of our pets
               </Typography>
             </Box>
 
-            <Box sx={{ alignSelf: 'end',  display: { xs: 'none', md: 'block' } }}>
+            <Box sx={{ alignSelf: 'end', display: { xs: 'none', md: 'block' } }}>
               <Button variant="outlined" endIcon={<ChevronRightIcon />} ><Link href='/products'>View more </Link></Button>
             </Box>
 

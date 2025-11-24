@@ -1,5 +1,6 @@
-import { Card, CardContent, CardMedia, Box, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Box, Typography, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 type PetCardProps = {
     pData: any;
@@ -39,13 +40,13 @@ export default function PetCard({ pData }: PetCardProps) {
 
                 <Typography
                     variant="h6"
-                    sx={{ fontWeight: 700, color: "#001A30", fontSize: {xs:'14px', md:'16px'} }}
+                    sx={{ fontWeight: 700, color: "#001A30", fontSize: { xs: '14px', md: '16px' } }}
                 >
                     {pData.title.slice(0, 20)}
 
                 </Typography>
 
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: '1px', fontWeight: 400, fontSize: {xs:'12px', md:'14px'} }}>
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1, mt: '1px', fontWeight: 400, fontSize: { xs: '12px', md: '14px' } }}>
                     <Typography sx={{ color: "#667479", fontSize: "14px" }}>
                         {pData.category}
                     </Typography>
@@ -75,6 +76,9 @@ export default function PetCard({ pData }: PetCardProps) {
                 >
                     {pData.price}
                 </Typography>
+                {
+                    pData.add ? (<Button variant="contained" sx={{borderRadius:'8px', mt:1, fontSize:'15px'}} startIcon={<ShoppingCartOutlinedIcon />}>add</Button>) : ''
+                }
             </CardContent>
         </Card>
     );
