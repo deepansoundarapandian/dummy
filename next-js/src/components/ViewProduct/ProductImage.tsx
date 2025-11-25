@@ -67,7 +67,7 @@ const ProductImage = ({ product, image, setImage }: { product: any, image: any, 
                     bgcolor: "#FFF4D9",
                     fontSize: "13px",
                     fontWeight: 700,
-                    display: 'flex',
+                    display: {xs:'none', md:'flex'},
                     flexDirection: { xs: 'column', md: 'row' },
                     gap: 2,
                     mt: 3
@@ -79,7 +79,7 @@ const ProductImage = ({ product, image, setImage }: { product: any, image: any, 
             {/* </Stack> */}
             <Box
                 sx={{
-                    display: "flex",
+                    display:{xs:'none', md:'flex'},
                     alignItems: "center",
                     gap: 2,
                     mt: 2,

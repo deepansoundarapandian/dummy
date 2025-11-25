@@ -10,7 +10,7 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import { userData } from "@/context/UserData";
 import Image from "next/image";
 
-const CartItems = ({item}:{item: any}) => {
+const CartItems = ({ item }: { item: any }) => {
 
     const { setCart } = userData();
 
@@ -27,7 +27,7 @@ const CartItems = ({item}:{item: any}) => {
     const removeItem = (id: any) => {
         setCart((prev: any) => prev.filter((item: any) => item.id !== id));
     };
-    
+
     return (
         <Card
             key={item.id}
@@ -42,13 +42,21 @@ const CartItems = ({item}:{item: any}) => {
             }}
         >
             {/* PRODUCT IMAGE */}
-            <Image
-                src={item.img}
-                width={145}
-                height={145}
-                alt={item.title}
-                style={{ borderRadius: 8 }}
-            />
+            <Box
+                sx={{
+                    width: { xs: 78, md: 145 },   
+                    height: { xs: 78, md: 145 },  
+                }}
+            >
+                <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={145}
+                    height={145}
+                    style={{ width: "100%", height: "auto", borderRadius: 8 }}
+                />
+            </Box>
+
 
             {/* PRODUCT DETAILS */}
             <Box sx={{ flexGrow: 1 }}>

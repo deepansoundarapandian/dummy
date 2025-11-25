@@ -47,6 +47,7 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
         if (existingUser) {
             setSnackbarOpen(true);
             setLoggedIn({
+                userId: existingUser.id,
                 userName: existingUser.name,
                 loggedIn: true
             })
@@ -65,15 +66,16 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
     return (
         <>
             <Modal
-                sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 2 }}
+                sx={{ display: "flex", justifyContent: "center", alignItems: "center", }}
                 open={open}
                 onClose={onClose}
             >
                 <Box
                     sx={{
-                        width: { xs: "100%", sm: "90%", md: "900px" },
+                        width: { xs: "100%", md: "900px" },
+                        height: { xs: "100vh", md: "auto" },  
                         bgcolor: "white",
-                        borderRadius: "20px",
+                        borderRadius: { xs: 0, md: "20px" }, 
                         boxShadow: 24,
                         display: "flex",
                         flexDirection: { xs: "column", md: "row" },

@@ -2,15 +2,15 @@ import { ThemeProvider } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from '../themes/theme'
 import "@/styles/globals.css";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer";
 import type { AppProps } from "next/app";
 import { usePathname } from "next/navigation";
 import Container from "@mui/material/Container";
-import LoginModal from "@/components/Login";
-import SignupModal from "@/components/Signup";
+import LoginModal from "@/components/Authentication/Login";
+import SignupModal from "@/components/Authentication/Signup";
 import { useState } from "react";
-import VerifyMail from "../components/VerifyMail";
+import VerifyMail from "../components/Authentication/VerifyMail";
 import { UserDataProvider } from "@/context/UserData";
 import { useMediaQuery } from "@mui/material"
 
@@ -78,7 +78,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <CssBaseline />
         <Container maxWidth="xl" sx={{ ...bgImage }}></Container>
 
-        <Container maxWidth="xl" >
+        <Container maxWidth="xl">
 
           <UserDataProvider>
 

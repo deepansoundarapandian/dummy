@@ -8,9 +8,9 @@ import {
     Divider
 } from "@mui/material";
 import Image from "next/image";
-import PetCard from "@/components/PetCard";
-import CartItems from "@/components/CartItems";
-import CartSummary from "@/components/CartSummary";
+import PetCard from "@/components/ProductCard/PetCard";
+import CartItems from "@/components/Cart/CartItems";
+import CartSummary from "@/components/Cart/CartSummary";
 import { userData } from "@/context/UserData";
 
 export default function CartPage() {
@@ -35,63 +35,99 @@ export default function CartPage() {
 
     return (
 
-        <Container sx={{ color: 'black', }}>
+        <Container sx={{ color: 'black', pt: 3 }}>
 
-            <Box sx={{ py: 4 }}>
-                <Typography sx={{ fontSize: '28px', fontWeight: 400, mb: 3 }}>
-                    Cart <span style={{ fontWeight: 400, color: '#838383', fontSize: '20px' }}>({cart.length} items)</span>
+            <Box sx={{ py: 2 }}>
+                <Typography
+                    sx={{
+                        fontSize: { xs: '22px', md: '28px' },
+                        fontWeight: 400,
+                        mb: 3,
+                    }}
+                >
+                    Cart
+                    <span style={{ color: '#838383', fontSize: '16px',paddingLeft:'7px' }}>
+                        ({cart.length} items)
+                    </span>
                 </Typography>
 
+                {/* EMPTY CART */}
                 {cart.length === 0 && (
                     <Box
                         sx={{
                             width: "100%",
-                            height: 400,
+                            height: 350,
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
                         }}
                     >
-                        <Image
-                            src="/Group 1171276766.png"
-                            width={350}
-                            height={350}
-                            alt="Empty cart"
-                        />
+                        No Products Added
                     </Box>
                 )}
 
-
+                {/* NON EMPTY */}
                 {cart.length > 0 && (
-                    <Box sx={{ display: "flex", gap: 4, }}>
-
-                        <Box sx={{ flex: 1, boxShadow: "0 0 5px rgba(0,0,0,0.1)", borderRadius: '8px' }}>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            gap: 4,
+                            flexDirection: { xs: "column", md: "row" },   // 🌟 MOBILE FIX
+                        }}
+                    >
+                        {/* CART ITEMS */}
+                        <Box
+                            sx={{
+                                flex: 1,
+                                boxShadow: {
+                                    md: "0 0 5px rgba(0,0,0,0.1)"
+                                },
+                                borderRadius: '8px',
+                                p: { xs: 0, md: 2 }, 
+                            }}
+                        >
                             {cart.map((item: any) => (
-                                <>
-                                    <CartItems key={item.id} item={item} />
+                                <Box key={item.id}>
+                                    <CartItems item={item} />
                                     <Divider variant="middle" />
-                                </>
+                                </Box>
                             ))}
                         </Box>
 
-                        <CartSummary />
-
+                        {/* SUMMARY (Moves to bottom on mobile) */}
+                        <Box sx={{ width: { xs: "100%", md: "350px" } }}>
+                            <CartSummary />
+                        </Box>
                     </Box>
                 )}
             </Box>
 
-            <Box sx={{ py: 4 }}>
-                <Typography variant="h3" sx={{ mb: 3, color: 'primary.main' }}>
+            {/* FREQUENTLY BOUGHT */}
+            <Box sx={{ py: 3 }}>
+                <Typography
+                    variant="h3"
+                    sx={{
+                        mb: 2,
+                        fontSize: { xs: "20px", md: "32px" },
+                        color: 'primary.main'
+                    }}
+                >
                     Frequently Bought
                 </Typography>
+
                 <Grid container spacing={2}>
                     {loop.map((product: any) => (
-                        <Grid key={product} size={{ md: 3, xs: 6 }}>
+                        <Grid
+                            key={product}
+                            size={{ xs: 6, md: 3 }}   // 🌟 MOBILE 2-COLUMN FIX
+                        >
                             <PetCard pData={dummyData} />
                         </Grid>
                     ))}
                 </Grid>
             </Box>
+
         </Container>
+
     );
 }

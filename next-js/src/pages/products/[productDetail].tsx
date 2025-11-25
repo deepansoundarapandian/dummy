@@ -1,17 +1,20 @@
 "use client";
 import { Box, Grid } from "@mui/material";
-import { useRouter } from "next/router";
+import { useRouter,  } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Container } from "@mui/material";
 
-import CustomerReview from "@/components/CustomerReview";
-import ProductDetail from "@/components/ProductDetail";
-import ProductImage from "@/components/ProductImage";
+import CustomerReview from "@/components/CustomerReview/CustomerReview";
+import ProductDetail from "@/components/ViewProduct/ProductDetail";
+import ProductImage from "@/components/ViewProduct/ProductImage";
+import ProductSkeleton from "@/components/ProductSkeleton";
+
 
 export default function ProductDetailsPage() {
 
   const router = useRouter();
+   
   const { productDetail } = router.query;
   const [product, setProduct] = useState<any>(null);
   const [image, setImage] = useState("");
@@ -26,7 +29,7 @@ export default function ProductDetailsPage() {
     getProduct();
   }, [productDetail]);
 
-  if (!product) return <div>Loading...</div>;
+  if (!product) return <ProductSkeleton />;;
 
   return (
     <>
@@ -41,7 +44,7 @@ export default function ProductDetailsPage() {
             {/* RIGHT SIDE: DETAILS */}
             <ProductDetail product={product}/>
 
-          </Grid>
+          </Grid> 
         </Box>
       
         <CustomerReview/>

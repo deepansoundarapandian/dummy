@@ -1,5 +1,5 @@
-import PetCard from "@/components/PetCard";
-import CustomerSlider from "@/components/CustomerSlider";
+import PetCard from "@/components/ProductCard/PetCard";
+import CustomerSlider from "@/components/CustomerReview/CustomerSlider";
 import { Box, Grid, Typography } from "@mui/material";
 
 const CustomerReview = () => {

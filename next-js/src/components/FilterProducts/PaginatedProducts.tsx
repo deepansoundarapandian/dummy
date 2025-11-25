@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Box, Grid, Typography } from "@mui/material";
-import PetCard from "@/components/PetCard";
+import PetCard from "@/components/ProductCard/PetCard";
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import Stack from '@mui/material/Stack';

@@ -7,14 +7,14 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    Container, useMediaQuery, useTheme
+    Container, useMediaQuery, 
 } from "@mui/material";
 
-import UpdateProfile from "@/components/UpdateProfile";
-import MyOrders from "@/components/MyOrders";
-import Wishlist from "@/components/Wishlist";
-import Addresses from "@/components/Addresses";
-import Notifications from "@/components/Notifications";
+import UpdateProfile from "@/components/Profile/EditProfile/UpdateProfile";
+import MyOrders from "@/components/Profile/MyOrders/MyOrders";
+import Wishlist from "@/components/Profile/Wishlist";
+import Addresses from "@/components/Profile/Addresses";
+import Notifications from "@/components/Profile/Notifications";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -23,12 +23,20 @@ import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNone
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { userData } from "@/context/UserData";
+import { useRouter, usePathname } from "next/navigation";
+import theme from "@/themes/theme";
 
 export default function ProfilePage() {
 
-    const { selected, setSelected } = userData();
-    // const theme = useTheme();
+    const { selected, setSelected, loggedIn, setLoggedIn, newUser, } = userData();
+
+    const userId = loggedIn.userId;
+
+    const currentUser = newUser.find((u: any) => u.id === userId);
+
     // const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+    const router = useRouter();
 
     const menuItems = [
         { id: "profile", label: "My Profile", icon: <AccountCircleOutlinedIcon /> },
@@ -45,6 +53,19 @@ export default function ProfilePage() {
         color: "#00171F",
     };
 
+    const handleLogout = () => {
+        const confirmLogout = window.confirm("Are you sure you want to logout?");
+
+        if (confirmLogout) {
+            setLoggedIn({
+                userId: null,
+                userName: '',
+                loggedIn: false
+            });
+            setSelected("profile");
+            router.push("/");
+        }
+    };
 
     const renderComponent = () => {
         switch (selected) {
@@ -58,33 +79,30 @@ export default function ProfilePage() {
                 return <Addresses />;
             case "notifications":
                 return <Notifications />;
-            case "logout":
-                return <Typography color="red">Logging out...</Typography>;
             default:
                 return <UpdateProfile />;
         }
     };
 
     return (
-        <Container >
+        <Container disableGutters>
             <Box
                 sx={{
                     display: "flex",
                     gap: 4,
                     p: { xs: 0, md: 4 },
-                    minHeight: "90vh",
+                    minHeight: {xs:"70vh",md:"90vh"},
                     color: "black",
-
                 }}
             >
                 {/* LEFT SIDEBAR */}
                 <Box
                     sx={{
-                        width: 340,
+                        minWidth: 340,
                         borderRadius: "10px",
                         p: 3,
                         height: "100%",
-                        display: { xs: 'none', md: 'block' }
+                        display: { xs: 'none', md: 'block' },
                     }}
                 >
                     {/* User info */}
@@ -104,19 +122,22 @@ export default function ProfilePage() {
                                 borderRadius: "50%",
                             }}
                         >
-                            <AccountCircleIcon
-                                sx={{
-                                    width: "100%",
-                                    height: "100%",
-                                    color: "#CDCDCD",
-                                }}
-                            />
+                            {currentUser?.image ? (
+                                <img
+                                    src={currentUser.image}
+                                    alt="Profile"
+                                    style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius:'50%' }}
+                                />
+                            ) : (
+                                <AccountCircleIcon sx={{ width: "100%", height: "100%", color: "#CDCDCD" }} />
+                            )}
                         </Box>
                         <Box>
-                            <Typography sx={{ ...title }}>Username</Typography>
+                            <Typography sx={{ ...title, textTransform: 'capitalize' }}>{loggedIn.userName}</Typography>
                             <Typography fontSize={13} color="#667479">
-                                +91 0123456789
+                                {currentUser?.phoneNo}
                             </Typography>
+
                         </Box>
                     </Box>
 
@@ -125,7 +146,14 @@ export default function ProfilePage() {
                         {menuItems.map((item) => (
                             <ListItem
                                 key={item.id}
-                                onClick={() => setSelected(item.id)}
+                                onClick={() => {
+                                    if (item.id === "logout") {
+                                        handleLogout();
+                                    } else {
+                                        setSelected(item.id);
+                                    }
+                                }}
+
                                 sx={{
                                     borderRadius: "8px",
                                     mb: 1,

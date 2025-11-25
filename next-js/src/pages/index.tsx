@@ -4,8 +4,8 @@ import Head from "next/head";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Container, Typography, Box, Button } from "@mui/material";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import PetCard from "@/components/PetCard";
-import PetProduct from "@/components/PetProduct";
+import PetCard from "@/components/ProductCard/PetCard";
+import PetProduct from "@/components/ProductCard/PetProduct";
 import Grid from '@mui/material/Grid';
 import Image from "next/image";
 import axios from "axios";
@@ -52,7 +52,7 @@ export default function Home() {
       <div
         className={`${geistSans.variable} ${geistMono.variable}`}
       >
-        <Container maxWidth='lg' sx={{ color: 'black', py: '40px', mt: { xs: '250px', md: '600px' } }}>
+        <Container maxWidth='lg' sx={{ color: 'black', py: '40px', mt: { xs: '260px', md: '600px' } }}>
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px', }}>
 

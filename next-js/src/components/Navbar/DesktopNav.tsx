@@ -49,7 +49,7 @@ const DesktopNav = ({ setAnchorEl, onOpenLogin, open }: { setAnchorEl: any, onOp
                 <List sx={{ display: "flex", gap: 5 }}>
                     {list.map((item) => (
                         <ListItem key={item} sx={{ width: "auto", p: 0 }}>
-                            <Link href="#">
+                            <Link href="/">
                                 <ListItemText
                                     primary={item}
                                     sx={{

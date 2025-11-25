@@ -16,6 +16,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
 import Snackbar from '@mui/material/Snackbar';
+import { v4 as uuidv4 } from "uuid";
 
 export default function SignupModal({ open, onClose, onOpenLogin, openMail }: any) {
 
@@ -59,7 +60,13 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
             return;
         }
 
-        setNewUser((prev: any) => [...prev, formData]);
+        const newUserData = {
+            id: uuidv4(),
+            ...formData
+        };
+
+        setNewUser((prev: any) => [...prev, newUserData]);
+        
         setFormData({
             name: "",
             email: "",
@@ -77,15 +84,16 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
     return (
         <>
             <Modal
-                sx={{ display: "flex", justifyContent: "center", alignItems: "center", p: 2 }}
+                sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
                 open={open}
                 onClose={onClose}
             >
                 <Box
                     sx={{
-                        width: { xs: "100%", sm: "90%", md: "900px" },
+                         width: { xs: "100%", md: "900px" },
+                        height: { xs: "100vh", md: "auto" },  
                         bgcolor: "white",
-                        borderRadius: "20px",
+                        borderRadius: { xs: 0, md: "20px" }, 
                         boxShadow: 24,
                         display: "flex",
                         flexDirection: { xs: "column", md: "row" },

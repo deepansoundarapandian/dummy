@@ -19,7 +19,7 @@ const CartSummary = () => {
     return (
         <Card
             sx={{
-                width: 350,
+                width: '100%',
                 p: 3,
                 borderRadius: "16px",
                 border: "1px solid #EDEDED",

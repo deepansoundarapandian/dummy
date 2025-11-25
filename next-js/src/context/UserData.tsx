@@ -6,17 +6,14 @@ const UserContext = createContext<any>(null);
 
 export const UserDataProvider = ({ children }: any) => {
 
-    const [newUser, setNewUser] = useState([
-        { name: 'deepan', email: 'd@gmail.com', password: '123', confirmPassword: '123' }
-    ]);
-
-    const [existUser, setExistUser] = useState([]);
+    const [newUser, setNewUser] = useState([]);
 
     const [loggedIn, setLoggedIn] = useState({
-        userName: 'Deepan',
+        userId:null,
+        userName: '',
         loggedIn: false
-    })
-
+    });
+    
     const [orders, setOrders] = useState([
         {
             id: 1,
@@ -80,7 +77,6 @@ export const UserDataProvider = ({ children }: any) => {
         },
     ]);
 
-
      const [cart, setCart] = useState([
         {
             id: 1,
@@ -88,7 +84,7 @@ export const UserDataProvider = ({ children }: any) => {
             productType: "Dog Food",
             size: "385gm",
             price: 199,
-            img: "/assets/image 2 (2).png",
+            image: "/assets/image 2 (2).png",
             qty: 1,
         },
         {
@@ -97,16 +93,18 @@ export const UserDataProvider = ({ children }: any) => {
             productType: "Dog Food",
             size: "385gm",
             price: 199,
-            img: "/assets/image 2 (2).png",
+            image: "/assets/image 2 (2).png",
             qty: 1,
         },
     ]);
 
+    console.log(cart);
+    
 
      const [selected, setSelected] = useState("profile");
 
     return (
-        <UserContext.Provider value={{ newUser, setNewUser, existUser, setExistUser, loggedIn, setLoggedIn, orders, setOrders, selected, setSelected, cart, setCart }}>
+        <UserContext.Provider value={{ newUser, setNewUser,  loggedIn, setLoggedIn, orders, setOrders, selected, setSelected, cart, setCart }}>
             {children}
         </UserContext.Provider>
     );

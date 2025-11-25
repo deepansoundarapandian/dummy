@@ -12,13 +12,23 @@ import {
     MenuItem,
     Typography,
 } from "@mui/material";
-import Link from "next/link";
+import { userData } from "@/context/UserData";
+import { useRouter } from "next/navigation";
 
 const ProfileMenu = ({ anchorEl, setAnchorEl, handleLogout }: { anchorEl: any, setAnchorEl: any, handleLogout: any }) => {
+
+    const { setSelected } = userData();
+
+    const router=useRouter();
 
     const open = Boolean(anchorEl);
 
     const handleClose = () => setAnchorEl(null);
+
+    const profile = (link: string) => {
+        setSelected(link);
+        router.push("/profile")
+    }
 
     return (
         <Menu
@@ -48,11 +58,11 @@ const ProfileMenu = ({ anchorEl, setAnchorEl, handleLogout }: { anchorEl: any, s
             {/* Menu Items */}
 
             {[
-                { icon: <PersonOutlineIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "My Profile", link: '/profile' },
-                { icon: <ShoppingBagOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "My Orders", link: '/myorders' },
-                { icon: <FavoriteBorderOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "Wishlist", link: '/wishlist' },
-                { icon: <LocationOnOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "Saved Addresses", link: '/savedaddress' },
-                { icon: <NotificationsNoneOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "Notifications", link: '/notifications' },
+                { icon: <PersonOutlineIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "My Profile", link: 'profile' },
+                { icon: <ShoppingBagOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "My Orders", link: 'orders' },
+                { icon: <FavoriteBorderOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "Wishlist", link: 'wishlist' },
+                { icon: <LocationOnOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "Saved Addresses", link: '/addresses' },
+                { icon: <NotificationsNoneOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "Notifications", link: 'notifications' },
             ].map((item) => (
                 <MenuItem
                     key={item.label}
@@ -65,16 +75,15 @@ const ProfileMenu = ({ anchorEl, setAnchorEl, handleLogout }: { anchorEl: any, s
                     }}
                 >
                     <ListItemIcon sx={{ color: "#002A8A" }}>{item.icon}</ListItemIcon>
-                    <Link href={item.link}>
-                        <ListItemText
-                            primary={item.label}
-                            primaryTypographyProps={{
-                                fontSize: "14px",
-                                fontWeight: 400,
-                                color: "#474847",
-                            }}
-                        />
-                    </Link>
+                    <ListItemText
+                        primary={item.label}
+                        primaryTypographyProps={{
+                            fontSize: "14px",
+                            fontWeight: 400,
+                            color: "#474847",
+                        }}
+                        onClick={()=>profile(item.link)}
+                    />
                 </MenuItem>
             ))}
 
@@ -83,7 +92,6 @@ const ProfileMenu = ({ anchorEl, setAnchorEl, handleLogout }: { anchorEl: any, s
                 onClick={handleLogout}
                 sx={{
                     py: 1.5,
-                    // mt: 1,
                     borderRadius: 1,
                     "&:hover": { backgroundColor: "#ffe5e5" },
                 }}
