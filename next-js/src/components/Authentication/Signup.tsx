@@ -1,3 +1,13 @@
+import { userData } from "@/context/UserData";
+import MiniNotification from "../Notification/MiniNotification";
+import CloseIcon from "@mui/icons-material/Close";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import {
     Box,
     Modal,
@@ -7,22 +17,10 @@ import {
     InputAdornment,
     Button
 } from "@mui/material";
-import { userData } from "@/context/UserData";
-import CloseIcon from "@mui/icons-material/Close";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { useState } from "react";
-import Snackbar from '@mui/material/Snackbar';
-import { v4 as uuidv4 } from "uuid";
 
 export default function SignupModal({ open, onClose, onOpenLogin, openMail }: any) {
 
     const { setNewUser } = userData();
-
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
 
     const [formData, setFormData] = useState({
         name: "",
@@ -30,9 +28,13 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
         password: "",
         confirmPassword: "",
     });
-
     const [showPassword, setShowPassword] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState(false);
+
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [formSnackBar, setFormSnackBar] = useState(false);
+    const [verifySnackBar, setVerifySnackBar] = useState(false);
+    const [emailError, setEmailError] = useState(false);
 
     const togglePassword = () => {
         setShowPassword((prev) => !prev);
@@ -49,14 +51,24 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
         }));
     };
 
+    const validateEmail = (email: string) => {
+        return /\S+@\S+\.\S+/.test(email);
+    };
+
+
     const handleSubmit = () => {
         if (!formData.name || !formData.email || !formData.password) {
-            alert("Please fill all fields");
+            setFormSnackBar(true);
             return;
         }
 
         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match");
+            setVerifySnackBar(true);
+            return;
+        }
+
+        if (!validateEmail(formData.email)) {
+            setEmailError(true);
             return;
         }
 
@@ -66,7 +78,7 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
         };
 
         setNewUser((prev: any) => [...prev, newUserData]);
-        
+
         setFormData({
             name: "",
             email: "",
@@ -79,8 +91,6 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
         onClose();
     };
 
-
-
     return (
         <>
             <Modal
@@ -90,10 +100,10 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
             >
                 <Box
                     sx={{
-                         width: { xs: "100%", md: "900px" },
-                        height: { xs: "100vh", md: "auto" },  
+                        width: { xs: "100%", md: "900px" },
+                        height: { xs: "100vh", md: "auto" },
                         bgcolor: "white",
-                        borderRadius: { xs: 0, md: "20px" }, 
+                        borderRadius: { xs: 0, md: "20px" },
                         boxShadow: 24,
                         display: "flex",
                         flexDirection: { xs: "column", md: "row" },
@@ -120,7 +130,7 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                             position: "relative",
                         }}
                     >
-                        {/* Close Button */}
+
                         <IconButton
                             onClick={onClose}
                             sx={{
@@ -132,7 +142,6 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                             <CloseIcon />
                         </IconButton>
 
-                        {/* Logo */}
                         <img
                             src="/assets/Frame.png"
                             width="115px"
@@ -141,7 +150,6 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                             style={{ marginTop: "20px" }}
                         />
 
-                        {/* Heading */}
                         <Typography
                             variant="h5"
                             sx={{
@@ -173,7 +181,6 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                             Name
                         </Typography>
 
-                        {/* Name Field */}
                         <TextField
                             fullWidth
                             placeholder="Enter your Name"
@@ -207,7 +214,6 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                             }}
                         />
 
-                        {/* Email Label */}
                         <Typography
                             sx={{
                                 color: "#474847",
@@ -218,7 +224,6 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                             Email Address
                         </Typography>
 
-                        {/* Email Field */}
                         <TextField
                             fullWidth
                             placeholder="Enter your email"
@@ -252,7 +257,6 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                             }}
                         />
 
-                        {/* Password Label */}
                         <Typography
                             sx={{
                                 color: "#474847",
@@ -263,7 +267,6 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                             Password
                         </Typography>
 
-                        {/* Password Field */}
                         <TextField
                             fullWidth
                             type={showPassword ? "text" : "password"}
@@ -306,7 +309,6 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                             }}
                         />
 
-
                         <Typography
                             sx={{
                                 color: "#474847",
@@ -317,7 +319,6 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                             Confirm Password
                         </Typography>
 
-                        {/* Confirm Password Field */}
                         <TextField
                             fullWidth
                             type={confirmPassword ? "text" : "password"}
@@ -360,11 +361,8 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                             }}
                         />
 
-                        {/* Login Button */}
-
                         <Button variant="contained" sx={{ borderRadius: 2, fontWeight: 400, width: '100%', }} onClick={handleSubmit}>Sign up</Button>
 
-                        {/* Terms & Policy */}
                         <Typography
                             sx={{
                                 mt: 2,
@@ -385,7 +383,6 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                             </span>
                         </Typography>
 
-                        {/* Sign Up */}
                         <Typography
                             sx={{
                                 mt: 2,
@@ -411,15 +408,10 @@ export default function SignupModal({ open, onClose, onOpenLogin, openMail }: an
                 </Box>
             </Modal>
 
-            <Snackbar
-                open={snackbarOpen}
-                autoHideDuration={3000}
-                onClose={() => setSnackbarOpen(false)}
-                message="Signup successful!"
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            />
-
+            <MiniNotification snackbarOpen={snackbarOpen} setSnackbarOpen={setSnackbarOpen} content='Signup successful !' color='success' />
+            <MiniNotification snackbarOpen={formSnackBar} setSnackbarOpen={setFormSnackBar} content='Please fill all the fields !' color='error' />
+            <MiniNotification snackbarOpen={verifySnackBar} setSnackbarOpen={setVerifySnackBar} content='Passwords does not match !' color='error' />
+            <MiniNotification snackbarOpen={emailError} setSnackbarOpen={setEmailError} content='Please enter a valid email !' color='error' />
         </>
-
     );
 }

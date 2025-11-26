@@ -1,44 +1,44 @@
 "use client"
 
 import Head from "next/head";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Container, Typography, Box, Button } from "@mui/material";
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import PetCard from "@/components/ProductCard/PetCard";
-import PetProduct from "@/components/ProductCard/PetProduct";
-import Grid from '@mui/material/Grid';
 import Image from "next/image";
 import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
+import PetCard from "@/components/ProductCard/PetCard";
+import PetProduct from "@/components/ProductCard/PetProduct";
+import PetCardSkeleton from "@/components/Skeleton/PetCardSkeleton";
+import { Container, Typography, Box, Button } from "@mui/material";
+import Grid from '@mui/material/Grid';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 export default function Home() {
 
   const [data, setData] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
-    const fakeStore = async () => {
-      const fakestoreData = await axios("https://fakestoreapi.com/products");
-      setData(fakestoreData.data);
-    }
-    fakeStore();
+
+    const fetchData = async () => {
+
+      setLoader(true);
+      try {
+        const response = await axios("https://fakestoreapi.com/products");
+        setData(response.data);
+      } catch (err) {
+        console.log("API Error:", err);
+      } finally {
+        setLoader(false);
+      }
+
+    };
+
+    fetchData();
   }, []);
+
 
   const pets = [1, 2, 3, 4, 5, 6, 7, 8];
   const petSellers = ['/assets/Frame 41.png', '/assets/image 6.png', '/assets/image 7.png', '/assets/image 9.png', '/assets/image 10.png', '/assets/image 11.png'];
-
-
 
   return (
     <>
@@ -50,7 +50,6 @@ export default function Home() {
       </Head>
 
       <div
-        className={`${geistSans.variable} ${geistMono.variable}`}
       >
         <Container maxWidth='lg' sx={{ color: 'black', py: '40px', mt: { xs: '260px', md: '600px' } }}>
 
@@ -72,18 +71,28 @@ export default function Home() {
           </Box>
 
           <Box>
+
             <Grid container spacing={2} >
-              {data.map((product: any) => (
+              {loader ? [1, 2, 3, 4, 5, 6, 7, 8].map((product: any) => (
                 <Grid size={{ xl: 3, md: 4, sm: 6, xs: 6 }}
-                  key={product.id}
+                  key={product}
                 >
-                  <PetCard pData={product} />
+                  <PetCardSkeleton />
                 </Grid>
-              ))}
+              )) : (
+                data.map((product: any) => (
+                  <Grid size={{ xl: 3, md: 4, sm: 6, xs: 6 }}
+                    key={product.id}
+                  >
+                    <PetCard pData={product} />
+                  </Grid>
+                ))
+              )}
             </Grid>
+
           </Box>
 
-          <Box sx={{ mt: '50px', borderRadius: '20px', minHeight: '378px', backgroundImage: "url('/assets/Banner.png')", backgroundSize: 'cover', display: { xs: 'none', md: 'block' } }}></Box>
+          <Box sx={{ mt: '50px', borderRadius: '20px', minHeight: '378px', backgroundImage: "url('/assets/Banner.png')", backgroundSize: 'cover', display: { xs: 'none', md: 'block' } }} />
 
           <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'space-between', mb: '30px', mt: '50px' }}>
 
@@ -146,9 +155,10 @@ export default function Home() {
             }
           </Box>
 
-          <Box sx={{ width: '100%', mt: '50px', borderRadius: '20px', minHeight: { xs: '800px', md: '378px' }, backgroundImage: { xs: "url('/assets/poster.png')", md: "url('/assets/Banner.png')" }, backgroundSize: { xs: 'cover', md: 'cover' }, backgroundRepeat: 'no-repeat' }}></Box>
+          <Box sx={{ width: '100%', mt: '50px', borderRadius: '20px', minHeight: { xs: '500px', md: '378px' }, backgroundImage: { xs: "url('/assets/poster.png')", md: "url('/assets/Banner.png')" }, backgroundSize: { xs: 'cover', md: 'cover' }, backgroundRepeat: 'no-repeat' }} />
 
         </Container>
+        
       </div>
     </>
   );

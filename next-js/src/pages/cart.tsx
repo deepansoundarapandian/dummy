@@ -1,5 +1,9 @@
 "use client";
 
+import PetCard from "@/components/ProductCard/PetCard";
+import CartItems from "@/components/Cart/CartItems";
+import CartSummary from "@/components/Cart/CartSummary";
+import { userData } from "@/context/UserData";
 import {
     Box,
     Typography,
@@ -7,11 +11,6 @@ import {
     Container,
     Divider
 } from "@mui/material";
-import Image from "next/image";
-import PetCard from "@/components/ProductCard/PetCard";
-import CartItems from "@/components/Cart/CartItems";
-import CartSummary from "@/components/Cart/CartSummary";
-import { userData } from "@/context/UserData";
 
 export default function CartPage() {
 
@@ -72,10 +71,9 @@ export default function CartPage() {
                         sx={{
                             display: "flex",
                             gap: 4,
-                            flexDirection: { xs: "column", md: "row" },   // 🌟 MOBILE FIX
+                            flexDirection: { xs: "column", md: "row" },
                         }}
                     >
-                        {/* CART ITEMS */}
                         <Box
                             sx={{
                                 flex: 1,
@@ -94,7 +92,6 @@ export default function CartPage() {
                             ))}
                         </Box>
 
-                        {/* SUMMARY (Moves to bottom on mobile) */}
                         <Box sx={{ width: { xs: "100%", md: "350px" } }}>
                             <CartSummary />
                         </Box>
@@ -119,7 +116,7 @@ export default function CartPage() {
                     {loop.map((product: any) => (
                         <Grid
                             key={product}
-                            size={{ xs: 6, md: 3 }}   // 🌟 MOBILE 2-COLUMN FIX
+                            size={{ xs: 6, md: 3 }}
                         >
                             <PetCard pData={dummyData} />
                         </Grid>

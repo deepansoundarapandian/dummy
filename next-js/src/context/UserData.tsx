@@ -9,7 +9,7 @@ export const UserDataProvider = ({ children }: any) => {
     const [newUser, setNewUser] = useState([]);
 
     const [loggedIn, setLoggedIn] = useState({
-        userId:null,
+        userId: null,
         userName: '',
         loggedIn: false
     });
@@ -97,8 +97,6 @@ export const UserDataProvider = ({ children }: any) => {
             qty: 1,
         },
     ]);
-
-    console.log(cart);
     
 
      const [selected, setSelected] = useState("profile");

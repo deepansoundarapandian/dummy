@@ -1,14 +1,5 @@
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
-} */
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
+@import "swiper/css";
+@import "swiper/css/pagination";
 
 html,
 body {
@@ -36,4 +27,8 @@ a {
 
   .date-picker-wrapper {
     width: 100%;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active{
+  background-color: #003459;
 }

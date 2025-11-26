@@ -1,35 +1,37 @@
 "use client";
-import { Box, Grid } from "@mui/material";
-import { useRouter,  } from "next/router";
+
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Container } from "@mui/material";
-
 import CustomerReview from "@/components/CustomerReview/CustomerReview";
 import ProductDetail from "@/components/ViewProduct/ProductDetail";
 import ProductImage from "@/components/ViewProduct/ProductImage";
-import ProductSkeleton from "@/components/ProductSkeleton";
-
+import ProductSkeleton from "@/components/Skeleton/ProductSkeleton";
+import { Box, Grid,Container } from "@mui/material";
 
 export default function ProductDetailsPage() {
 
   const router = useRouter();
    
   const { productDetail } = router.query;
+
   const [product, setProduct] = useState<any>(null);
   const [image, setImage] = useState("");
 
   useEffect(() => {
+
     if (!productDetail) return;
+    
     const getProduct = async () => {
       const res = await axios(`https://fakestoreapi.com/products/${productDetail}`);
       setProduct(res.data);
       setImage(res.data.image);
     }
     getProduct();
+
   }, [productDetail]);
 
-  if (!product) return <ProductSkeleton />;;
+  if (!product) return <ProductSkeleton />;
 
   return (
     <>

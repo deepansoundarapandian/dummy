@@ -1,9 +1,10 @@
 import { Box, Divider, FormGroup, FormControlLabel, Checkbox, Typography } from "@mui/material";
 
 const FilterProducts = () => {
-    
-      const petColor = ["Red", "Apricot", "Black", "Black & White", "Silver", "Tan"];
+
+    const petColor = ["Red", "Apricot", "Black", "Black & White", "Silver", "Tan"];
     let checkBoxColor = { color: '#CCD1D2', borderRadius: "4px", width: '16px', height: '16px', mr: 2, p: 2, ml: 0.5, };
+    
     return (
         <Box
             sx={{

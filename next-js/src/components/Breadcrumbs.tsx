@@ -1,10 +1,11 @@
 "use client";
 
-import { Breadcrumbs, Link, Typography, Box, Container } from "@mui/material";
 import { usePathname } from "next/navigation";
 import NextLink from "next/link";
+import { Breadcrumbs, Link, Typography, Box, Container } from "@mui/material";
 
 export default function CustomBreadcrumbs({ title = "", gutter="" }: { title?: string, gutter? :string }) {
+
     const pathname = usePathname(); 
 
     if (!pathname || pathname === "/") return null;
@@ -73,7 +74,7 @@ export default function CustomBreadcrumbs({ title = "", gutter="" }: { title?: s
                     Home
                 </Link>
 
-                {breadcrumbLinks}
+                {breadcrumbLinks}  
             </Breadcrumbs>
         </Box>
       </Container>

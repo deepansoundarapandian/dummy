@@ -1,3 +1,11 @@
+import { userData } from "@/context/UserData";
+import { useState } from "react";
+import MiniNotification from "../Notification/MiniNotification";
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
+import CloseIcon from "@mui/icons-material/Close";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {
     Box,
     Modal,
@@ -7,25 +15,20 @@ import {
     InputAdornment,
     Button
 } from "@mui/material";
-import { userData } from "@/context/UserData";
-import CloseIcon from "@mui/icons-material/Close";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Snackbar from '@mui/material/Snackbar';
-import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import { useState } from "react";
 
 export default function LoginModal({ open, onClose, onOpenSignup }: any) {
 
     const { newUser, setLoggedIn } = userData();
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [formSnackBar, setFormSnackBar] = useState(false);
+    const [verifySnackBar, setVerifySnackBar] = useState(false);
 
     const [loginData, setLoginData] = useState({
         email: "",
         password: "",
     });
-
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleChange = (field: string, value: string) => {
         setLoginData(prev => ({
@@ -34,9 +37,14 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
         }));
     };
 
+    const togglePassword = () => {
+        setShowPassword((prev) => !prev);
+    };
+
     const handleSubmit = () => {
+
         if (!loginData.email || !loginData.password) {
-            alert("Please fill all fields");
+            setFormSnackBar(true);
             return;
         }
 
@@ -53,7 +61,7 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
             })
             onClose();
         } else {
-            alert("Invalid email or password!");
+            setVerifySnackBar(true);
         }
 
         setLoginData({
@@ -73,9 +81,9 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
                 <Box
                     sx={{
                         width: { xs: "100%", md: "900px" },
-                        height: { xs: "100vh", md: "auto" },  
+                        height: { xs: "100vh", md: "auto" },
                         bgcolor: "white",
-                        borderRadius: { xs: 0, md: "20px" }, 
+                        borderRadius: { xs: 0, md: "20px" },
                         boxShadow: 24,
                         display: "flex",
                         flexDirection: { xs: "column", md: "row" },
@@ -102,7 +110,7 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
                             position: "relative",
                         }}
                     >
-                        {/* Close Button */}
+
                         <IconButton
                             onClick={onClose}
                             sx={{
@@ -114,7 +122,6 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
                             <CloseIcon />
                         </IconButton>
 
-                        {/* Logo */}
                         <img
                             src="/assets/Frame.png"
                             width="115px"
@@ -123,7 +130,6 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
                             style={{ marginTop: "20px" }}
                         />
 
-                        {/* Heading */}
                         <Typography
                             variant="h5"
                             sx={{
@@ -145,7 +151,6 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
                             Please enter your email address to continue
                         </Typography>
 
-                        {/* Email Label */}
                         <Typography
                             sx={{
                                 color: "#474847",
@@ -156,7 +161,6 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
                             Email Address
                         </Typography>
 
-                        {/* Email Field */}
                         <TextField
                             fullWidth
                             placeholder="Enter your email"
@@ -190,7 +194,6 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
                             }}
                         />
 
-                        {/* Password Label */}
                         <Typography
                             sx={{
                                 color: "#474847",
@@ -201,10 +204,9 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
                             Password
                         </Typography>
 
-                        {/* Password Field */}
                         <TextField
                             fullWidth
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             placeholder="Enter your password"
                             autoComplete="off"
                             value={loginData.password}
@@ -234,8 +236,12 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
                                         </InputAdornment>
                                     ),
                                     endAdornment: (
-                                        <InputAdornment position="end">
-                                            <VisibilityOutlinedIcon sx={{ color: "#A3A3A3", width: "16px" }} />
+                                        <InputAdornment position="end" onClick={togglePassword} sx={{ cursor: "pointer" }}  >
+                                            {showPassword ? (
+                                                <VisibilityOffIcon sx={{ color: "#A3A3A3", width: "16px" }} />
+                                            ) : (
+                                                <VisibilityOutlinedIcon sx={{ color: "#A3A3A3", width: "16px" }} />
+                                            )}
                                         </InputAdornment>
                                     ),
                                 },
@@ -292,15 +298,10 @@ export default function LoginModal({ open, onClose, onOpenSignup }: any) {
                 </Box>
             </Modal>
 
-
-            <Snackbar
-                open={snackbarOpen}
-                autoHideDuration={3000}
-                onClose={() => setSnackbarOpen(false)}
-                message="Login successful!"
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            />
+            <MiniNotification snackbarOpen={snackbarOpen} setSnackbarOpen={setSnackbarOpen} content='Login successful !' color='success' />
+            <MiniNotification snackbarOpen={verifySnackBar} setSnackbarOpen={setVerifySnackBar} content='Invalid email or password!' color='error' />
+            <MiniNotification snackbarOpen={formSnackBar} setSnackbarOpen={setFormSnackBar} content='Please fill all the fields !' color='error' />
         </>
-
     );
 }
+

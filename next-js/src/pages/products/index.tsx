@@ -1,11 +1,9 @@
-import { Container } from "@mui/material";
 import CustomBreadcrumbs from "@/components/Breadcrumbs";
 import FilterProducts from "@/components/FilterProducts/FilterProducts";
 import PaginatedProducts from "@/components/FilterProducts/PaginatedProducts";
+import { Container } from "@mui/material";
 
 const ProductList = () => {
-
-
 
   return (
     <>
@@ -20,6 +18,7 @@ const ProductList = () => {
       </Container>
     </>
   );
+
 };
 
 export default ProductList;

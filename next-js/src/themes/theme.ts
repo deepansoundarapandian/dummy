@@ -1,7 +1,25 @@
 
 import { createTheme } from "@mui/material/styles";
+import localFont from 'next/font/local'
+
+export const monitoFont = localFont({
+    src: [
+        {
+            path: "../font/Gilroy-Regular.ttf",
+            weight: "400",
+            style: "normal",
+        },
+        {
+            path: "../font/Gilroy-Bold.ttf",
+            weight: "700",
+            style: "normal",
+        },
+    ],
+    variable: "--font-gilroy",
+});
 
 const theme = createTheme({
+
     palette: {
         primary: {
             main: "#003459",
@@ -14,6 +32,7 @@ const theme = createTheme({
         },
     },
     typography: {
+        fontFamily: "var(--font-gilroy)",
         h1: {
             fontWeight: 700,
             fontSize: '60px',
@@ -32,27 +51,28 @@ const theme = createTheme({
             lineHeight: '36px',
             letterSpacing: 0
         },
-        h4:{
-             fontWeight: 700,
+        h4: {
+            fontWeight: 700,
             fontSize: '20px',
             lineHeight: '32px',
             letterSpacing: 0
         },
-        h5:{
+        h5: {
             fontWeight: 700,
             fontSize: '16px',
-             lineHeight: '24px',
+            lineHeight: '24px',
         },
-        h6:{
-            fontSize:'14px',
-            fontWeight:400,
-            lineHeight:'20px'
+        h6: {
+            fontSize: '14px',
+            fontWeight: 400,
+            lineHeight: '20px'
         }
 
     },
     components: {
         MuiButton: {
             styleOverrides: {
+
                 root: {
                     borderRadius: 20,
                     textTransform: "capitalize",

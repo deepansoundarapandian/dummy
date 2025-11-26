@@ -9,6 +9,7 @@ import {
     Button,
 
 } from "@mui/material";
+import Badge from '@mui/material/Badge';
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -20,7 +21,7 @@ import { userData } from "@/context/UserData";
 
 const DesktopNav = ({ setAnchorEl, onOpenLogin, open }: { setAnchorEl: any, onOpenLogin: any, open: any }) => {
 
-    const { loggedIn } = userData();
+    const { loggedIn, cart } = userData();
 
     const list = ["Home", "Category", "About", "Contact"];
 
@@ -81,11 +82,13 @@ const DesktopNav = ({ setAnchorEl, onOpenLogin, open }: { setAnchorEl: any, onOp
 
                                 {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                             </ListItem>
-                            <ListItem sx={{ width: "auto", padding: 0 }}>
+                            <ListItem sx={{ width: "auto", padding: 0, display:'flex', gap:1 }}>
                                 <ListItemIcon sx={{ minWidth: "auto", mr: 1 }}>
-                                    <ShoppingCartOutlinedIcon
-                                        sx={{ width: 20, height: 20, color: 'primary.main' }}
-                                    />
+                                    <Badge badgeContent={cart.length} color="primary">
+                                        <ShoppingCartOutlinedIcon
+                                            sx={{ width: 20, height: 20, color: 'primary.main' }}
+                                        />
+                                    </Badge>
                                 </ListItemIcon>
                                 <Link href="/cart">
                                     <ListItemText

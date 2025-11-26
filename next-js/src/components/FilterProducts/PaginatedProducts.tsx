@@ -7,19 +7,29 @@ import PaginationItem from '@mui/material/PaginationItem';
 import Stack from '@mui/material/Stack';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import PetCardSkeleton from "../Skeleton/PetCardSkeleton";
 
 
 const PaginatedProducts = () => {
+
     const [allProducts, setAllProducts] = useState([]);
     const [paginatedData, setPaginatedData] = useState([]);
     const [page, setPage] = useState(1);
+    const [loader, setLoader] = useState(false);
 
     const limit = 5;
 
     useEffect(() => {
         const fetchAll = async () => {
-            let data = await axios("https://fakestoreapi.com/products");
-            setAllProducts(data.data);
+            setLoader(true);
+            try {
+                let data = await axios("https://fakestoreapi.com/products");
+                setAllProducts(data.data);
+            } catch (err) {
+                console.log("API Error:", err);
+            } finally {
+                setLoader(false);
+            }
         };
         fetchAll();
     }, []);
@@ -33,20 +43,28 @@ const PaginatedProducts = () => {
 
     const totalPages = Math.ceil(allProducts.length / limit);
     return (
-        <Box>
+        <Box sx={{ flexGrow: 1 }}>
 
             <Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
                     <Typography variant="h3" sx={{ color: "primary.main" }}>Small Dog</Typography>
-                    <Typography variant="h6" sx={{ color: '#667479' }}>52 puppies</Typography>
+                    <Typography variant="h6" sx={{ color: '#667479' }}>{allProducts.length} puppies</Typography>
                 </Box>
 
                 <Grid container spacing={2}>
-                    {paginatedData.map((product: any) => (
-                        <Grid key={product.id} size={{ xl: 4, md: 4, sm: 6, xs: 6 }}>
-                            <PetCard pData={product} />
-                        </Grid>
-                    ))}
+                    {
+                        loader ? [1, 2, 3, 4].map((product: any) => (
+                            <Grid key={product} size={{ xl: 4, md: 4, sm: 6, xs: 6 }}>
+                                <PetCardSkeleton />
+                            </Grid>
+                        )) : (
+                            paginatedData.map((product: any) => (
+                                <Grid key={product.id} size={{ xl: 4, md: 4, sm: 6, xs: 6 }}>
+                                    <PetCard pData={product} />
+                                </Grid>
+                            ))
+                        )
+                    }
                 </Grid>
 
             </Box>

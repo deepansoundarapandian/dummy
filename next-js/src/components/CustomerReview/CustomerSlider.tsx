@@ -1,5 +1,10 @@
+"use client";
+
 import { Box, Card, CardMedia } from "@mui/material";
-import { useRef, useState} from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const customerImages = [
     "/assets/Frame 121.png",
@@ -16,92 +21,46 @@ const customerImages = [
 ];
 
 export default function CustomerSlider() {
-    const scrollRef = useRef<HTMLDivElement>(null);
-    const [index, setIndex] = useState(0);
-
-    const cardWidth = 248 + 24; // 248 width + 24 gap
-
-    // Detect which slide is visible
-    const handleScroll = () => {
-        const scrollLeft = scrollRef.current?.scrollLeft || 0;
-        const newIndex = Math.round(scrollLeft / cardWidth);
-        setIndex(newIndex);
-    };
-
-    // Smooth scroll to slide when dot is clicked
-    const goToSlide = (i: number) => {
-        scrollRef.current?.scrollTo({
-            left: i * cardWidth,
-            behavior: "smooth",
-        });
-    };
-
     return (
-        <>
-            <Box
-                ref={scrollRef}
-                onScroll={handleScroll}
-                sx={{
-                    display: "flex",
-                    gap: 1.5,
-                    overflowX: "auto",
-                    scrollbarWidth: "none",
-                    "&::-webkit-scrollbar": { display: "none" },
-                    pb: 2,
-                    scrollSnapType: "x mandatory",
-                }}
+        <Box sx={{ width: "100%", py: 2 }}>
+            <Swiper
+                modules={[Pagination]}
+                slidesPerView={"auto"}
+                spaceBetween={20}
+                grabCursor={true}  // drag using mouse
+                pagination={{ clickable: true }}
+                style={{ paddingBottom: "40px", }} // space for dots
             >
                 {customerImages.map((img, i) => (
-                    <Card
+                    <SwiperSlide
                         key={i}
-                        sx={{
-                            minWidth: 248,
-                            height: 340,
-                            borderRadius: "20px",
-                            overflow: "hidden",
-                            flexShrink: 0,
-                            scrollSnapAlign: "start",
-                            boxShadow: "0px 4px 20px rgba(0,0,0,0.08)",
+                        style={{
+                            width: "248px",  // fixed width for each slide
                         }}
                     >
-                        <CardMedia
-                            component="img"
-                            src={img}
-                            alt={`customer-${i}`}
+                        <Card
                             sx={{
-                                width: "100%",
-                                height: "100%",
-                                objectFit: "cover",
+                                width: "248px",
+                                height: "340px",
+                                borderRadius: "20px",
+                                overflow: "hidden",
+                                boxShadow: "0px 4px 20px rgba(0,0,0,0.08)",
                             }}
-                        />
-                    </Card>
+                        >
+                            <CardMedia
+                                component="img"
+                                src={img}
+                                alt={`customer-${i}`}
+                                sx={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                }}
+                            />
+                        </Card>
+                    </SwiperSlide>
                 ))}
-            </Box>
-
-            {/* Pagination Dots */}
-            <Box
-                sx={{
-                    mt: 3,
-                    display: "flex",
-                    justifyContent: "center",
-                    gap: 1,
-                }}
-            >
-                {customerImages.map((_, i) => (
-                    <Box
-                        key={i}
-                        onClick={() => goToSlide(i)}
-                        sx={{
-                            width: 10,
-                            height: 10,
-                            borderRadius: "50%",
-                            cursor: "pointer",
-                            bgcolor: index === i ? "#001F1F" : "#D9D9D9",
-                            transition: "0.3s",
-                        }}
-                    />
-                ))}
-            </Box>
-        </>
+            </Swiper>
+        </Box>
     );
 }

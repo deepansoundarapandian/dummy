@@ -5,11 +5,13 @@ import { Grid, Paper, Skeleton, Stack, Box } from "@mui/material";
 export default function ProductSkeleton() {
     return (
         <Box sx={{ mt: 3, mb: 5, border: "1px solid #EEE", borderRadius: '20px', p: 2 }}>
+
             <Grid container spacing={4}>
 
-                {/* LEFT SIDE (Product Image Section Skeleton) */}
+                {/* LEFT SIDE */}
                 <Grid size={{ xs: 12, md: 6 }}>
-                    {/* Main Image Skeleton */}
+
+                    {/* Main Image */}
                     <Paper
                         elevation={0}
                         sx={{
@@ -19,35 +21,35 @@ export default function ProductSkeleton() {
                             height: "476px",
                         }}
                     >
-                        <Skeleton variant="rectangular" width="100%" height="100%" />
+                        <Skeleton animation="wave" variant="rectangular" width="100%" height="100%" sx={{bgcolor: "grey.200"}}/>
                     </Paper>
 
-                    {/* Thumbnail Skeletons */}
+                    {/* Thumbnails */}
                     <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
                         {[1, 2, 3, 4, 5].map((v) => (
                             <Skeleton
                                 key={v}
+                                animation="wave"
                                 variant="rectangular"
                                 width={94}
                                 height={94}
-                                sx={{ borderRadius: "10px" }}
+                                sx={{ borderRadius: "10px",bgcolor: "grey.200" }}
                             />
                         ))}
                     </Stack>
 
-                    {/* Health Tags Skeleton (Desktop Only) */}
+                    {/* Health Tags */}
                     <Box
                         sx={{
                             mt: 3,
                             display: { xs: "none", md: "flex" },
                             gap: 2,
-                            flexDirection: "row",
                         }}
                     >
-                        <Skeleton variant="rounded" width="100%" height={40} />
+                        <Skeleton animation="wave" variant="rounded" width="100%" height={40} sx={{bgcolor: "grey.200"}}/>
                     </Box>
 
-                    {/* Share Icons Skeleton */}
+                    {/* Share Icons */}
                     <Box
                         sx={{
                             mt: 2,
@@ -56,31 +58,28 @@ export default function ProductSkeleton() {
                             alignItems: "center",
                         }}
                     >
-                        <Skeleton variant="circular" width={24} height={24} />
-                        <Skeleton variant="text" width={60} height={24} />
-
-                        <Skeleton variant="circular" width={24} height={24} />
-                        <Skeleton variant="circular" width={24} height={24} />
-                        <Skeleton variant="circular" width={24} height={24} />
-                        <Skeleton variant="circular" width={24} height={24} />
+                        <Skeleton animation="wave" variant="circular" width={24} height={24} sx={{bgcolor: "grey.200"}}/>
+                        <Skeleton animation="wave" variant="text" width={60} height={24} sx={{bgcolor: "grey.200"}}/>
+                        <Skeleton animation="wave" variant="circular" width={24} height={24} sx={{bgcolor: "grey.200"}}/>
+                        <Skeleton animation="wave" variant="circular" width={24} height={24} sx={{bgcolor: "grey.200"}}/>
+                        <Skeleton animation="wave" variant="circular" width={24} height={24} sx={{bgcolor: "grey.200"}}/>
+                        <Skeleton animation="wave" variant="circular" width={24} height={24} sx={{bgcolor: "grey.200"}}/>
                     </Box>
                 </Grid>
 
-                {/* RIGHT SIDE (Product Detail Skeleton) */}
+                {/* RIGHT SIDE */}
                 <Grid size={{ xs: 12, md: 6 }}>
-                    {/* Title Skeleton */}
-                    <Skeleton variant="text" width="80%" height={40} />
 
-                    {/* Price Skeleton */}
-                    <Skeleton variant="text" width="40%" height={35} />
+                    <Skeleton animation="wave" variant="text" width="80%" height={40} sx={{bgcolor: "grey.200"}}/>
+                    <Skeleton animation="wave" variant="text" width="40%" height={35} sx={{bgcolor: "grey.200"}}/>
 
-                    {/* Buttons Skeleton */}
+                    {/* Buttons */}
                     <Box sx={{ mt: 3, display: "flex", gap: 2 }}>
-                        <Skeleton variant="rounded" width={120} height={45} sx={{ flexGrow: { xs: 1, md: 0 } }} />
-                        <Skeleton variant="rounded" width={120} height={45} sx={{ flexGrow: { xs: 1, md: 0 } }} />
+                        <Skeleton animation="wave" variant="rounded" width={120} height={45} sx={{ flexGrow: { xs: 1, md: 0 },bgcolor: "grey.200" }} />
+                        <Skeleton animation="wave" variant="rounded" width={120} height={45} sx={{ flexGrow: { xs: 1, md: 0 },bgcolor: "grey.200" }} />
                     </Box>
 
-                    {/* Details List Skeleton */}
+                    {/* Details List */}
                     <Paper elevation={0} sx={{ borderRadius: "16px", mt: 3, p: 3 }}>
                         {Array.from({ length: 10 }).map((_, i) => (
                             <Box
@@ -92,8 +91,8 @@ export default function ProductSkeleton() {
                                     borderBottom: "1px solid #EEE",
                                 }}
                             >
-                                <Skeleton variant="text" width="40%" height={30} />
-                                <Skeleton variant="text" width="50%" height={30} />
+                                <Skeleton animation="wave" variant="text" width="40%" height={30} sx={{bgcolor: "grey.200"}}/>
+                                <Skeleton animation="wave" variant="text" width="50%" height={30} sx={{bgcolor: "grey.200"}}/>
                             </Box>
                         ))}
                     </Paper>

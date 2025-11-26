@@ -8,10 +8,10 @@ import {
     IconButton,
     useMediaQuery
 } from "@mui/material";
+import Badge from '@mui/material/Badge';
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { userData } from "@/context/UserData";
 import { useRouter } from "next/navigation";
@@ -28,20 +28,20 @@ export default function Navbar({ onOpenLogin }: any) {
 
     const isMobile = useMediaQuery(theme.breakpoints.down("md")) && pathname === "/profile";
 
-    const { setLoggedIn, setSelected } = userData();
+    const { setLoggedIn, setSelected, cart } = userData();
     const [anchorEl, setAnchorEl] = useState(null);
     const [drawerOpen, setDrawerOpen] = useState(false);
 
-    const open = Boolean(anchorEl);
+    const [openAlert, setOpenAlert] = useState(false);
 
-    const handleClose = () => setAnchorEl(null);
+    const open = Boolean(anchorEl);
 
     const handleLogout = () => {
         setLoggedIn({ loggedIn: false, userName: "" });
-        handleClose();
         if (pathname === "/profile") {
             router.push("/")
         }
+        setOpenAlert(false);
     };
 
     const handleNav = (nav: string) => {
@@ -60,7 +60,7 @@ export default function Navbar({ onOpenLogin }: any) {
                     position: "relative",
                 }}
             >
-                <Container disableGutters sx={{ mt: {xs:0, md:"30px"} }}>
+                <Container disableGutters sx={{ mt: { xs: 0, md: "30px" } }}>
                     <Toolbar
                         sx={{
                             display: "flex",
@@ -72,7 +72,7 @@ export default function Navbar({ onOpenLogin }: any) {
 
                         {
                             isMobile ? '' : (
-                                <Box sx={{ display: { xs: "flex", md: "none" }, justifyContent: 'space-between', alignItems: 'center', width: '100%', mt:2 }}>
+                                <Box sx={{ display: { xs: "flex", md: "none" }, justifyContent: 'space-between', alignItems: 'center', width: '100%', mt: 2 }}>
                                     <IconButton
                                         onClick={() => setDrawerOpen(true)}
                                     >
@@ -95,12 +95,12 @@ export default function Navbar({ onOpenLogin }: any) {
                                     </Box>
 
 
-                                    <IconButton >
-                                        <Link href="/cart">
+                                    <IconButton onClick={() => router.push('/cart')}>
+                                        <Badge badgeContent={cart.length} color="primary">
                                             <ShoppingCartOutlinedIcon
-                                                sx={{ width: 22, height: 22, color: "black" }}
+                                                sx={{ width: 20, height: 20, color: 'primary.main' }}
                                             />
-                                        </Link>
+                                        </Badge>
                                     </IconButton>
                                 </Box>
                             )
@@ -114,7 +114,7 @@ export default function Navbar({ onOpenLogin }: any) {
 
             <MobileDrawer handleNav={handleNav} drawerOpen={drawerOpen} setDrawerOpen={setDrawerOpen} handleLogout={handleLogout} onOpenLogin={onOpenLogin} />
 
-            <ProfileMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} handleLogout={handleLogout} />
+            <ProfileMenu anchorEl={anchorEl} setAnchorEl={setAnchorEl} handleLogout={handleLogout} openAlert={openAlert} setOpenAlert={setOpenAlert} />
         </>
     );
 }

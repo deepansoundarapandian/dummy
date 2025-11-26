@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from "react";
+import MiniNotification from "../Notification/MiniNotification";
 import {
     Box,
     Modal,
@@ -5,41 +7,37 @@ import {
     Typography,
     TextField,
     Button,
-    Snackbar,
-    Alert
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import EditSquareIcon from '@mui/icons-material/EditSquare';
-import { useEffect, useRef, useState } from "react";
 
-export default function VerifyMail({ open, onClose }: any) {
+export default function VerifyMail({ open, onClose, openLogin }: any) {
 
     const [otp, setOtp] = useState("");
-    const [snackOpen, setSnackOpen] = useState(false);
     const [inputs, setInputs] = useState(["", "", "", ""]);
     const inputRefs = useRef<Array<HTMLInputElement | null>>([
         null, null, null, null
     ]);
 
+    const [snackOpen, setSnackOpen] = useState(false);
+    const [otpSnackBar, setotpSnackBar] = useState(false);
+    const [verifySnackBar, setVerifySnackBar] = useState(false);
+
     useEffect(() => {
         if (open) {
             generateOtp();
-           setTimeout(() => {
-             inputRefs.current[0]?.focus();
-           },50);
+            setTimeout(() => {
+                inputRefs.current[0]?.focus();
+            }, 50);
         }
     }, [open]);
 
-
-
     const generateOtp = () => {
         const newOtp = Math.floor(1000 + Math.random() * 9000).toString();
+
         setOtp(newOtp);
         setSnackOpen(true);
-        console.log("OTP:", newOtp);
-
         setInputs(["", "", "", ""]);
-
         inputRefs.current[0]?.focus();
     };
 
@@ -64,41 +62,35 @@ export default function VerifyMail({ open, onClose }: any) {
 
     const handleVerify = () => {
         if (inputs.join("") === otp) {
-            alert("OTP Verified Successfully! 🎉");
+            setotpSnackBar(true);
             onClose();
         } else {
-            alert("Incorrect OTP");
+            setVerifySnackBar(true);
         }
 
         setInputs(["", "", "", ""]);
 
         inputRefs.current[0]?.focus();
-
     };
 
+    const goToLogin = () => {
+        openLogin();
+        onClose();
+    }
 
     return (
         <>
-            <Snackbar
-                anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                open={snackOpen}
-                autoHideDuration={3000}
-                onClose={() => setSnackOpen(false)}
-            >
-                <Alert severity="info">OTP: {otp}</Alert>
-            </Snackbar>
-
             <Modal
-                sx={{ display: "flex", justifyContent: "center", alignItems: "center"   }}
+                sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
                 open={open}
                 onClose={onClose}
             >
                 <Box
                     sx={{
-                         width: { xs: "100%", md: "900px" },
-                        height: { xs: "100vh", md: "auto" },  
+                        width: { xs: "100%", md: "900px" },
+                        height: { xs: "100vh", md: "auto" },
                         bgcolor: "white",
-                        borderRadius: { xs: 0, md: "20px" }, 
+                        borderRadius: { xs: 0, md: "20px" },
                         boxShadow: 24,
                         display: "flex",
                         flexDirection: { xs: "column", md: "row" },
@@ -113,7 +105,7 @@ export default function VerifyMail({ open, onClose }: any) {
                             backgroundImage: "url('/assets/Herro Banner5.png')",
                             backgroundSize: "cover",
                             backgroundPosition: "center",
-                             display: { xs: "none", md: "block" },
+                            display: { xs: "none", md: "block" },
                         }}
                     />
 
@@ -125,7 +117,7 @@ export default function VerifyMail({ open, onClose }: any) {
                             position: "relative",
                         }}
                     >
-                        {/* Close */}
+
                         <IconButton
                             sx={{ position: "absolute", top: 16, right: 16 }}
                             onClick={onClose}
@@ -133,7 +125,6 @@ export default function VerifyMail({ open, onClose }: any) {
                             <CloseIcon />
                         </IconButton>
 
-                        {/* Logo */}
                         <img
                             src="/assets/Frame.png"
                             width="115px"
@@ -142,41 +133,37 @@ export default function VerifyMail({ open, onClose }: any) {
                             style={{ marginTop: "20px" }}
                         />
 
-                        {/* Title */}
                         <Typography
                             variant="h5"
                             sx={{
                                 color: "#00171F",
                                 fontSize: { xs: "22px", md: "28px" },
                                 mt: "20px",
-                                 textAlign:{ xs: 'center', md: 'start' }
+                                textAlign: { xs: 'center', md: 'start' }
                             }}
                         >
                             Verify Your Email
                         </Typography>
 
-                        {/* Subtitle */}
                         <Typography
                             sx={{
                                 my: 2,
                                 color: "grey.600",
                                 fontSize: { xs: "14px", md: "16px" },
-                                  textAlign:{ xs: 'center', md: 'start' }
+                                textAlign: { xs: 'center', md: 'start' }
                             }}
                         >
                             Please enter 4 digit OTP sent on email address
                         </Typography>
 
-                        {/* -------- EMAIL ROW -------- */}
-                        <Box sx={{ display: "flex", alignItems: "center", mb: 3, justifyContent: { xs: 'center', md: 'start' }}}>
+                        <Box sx={{ display: "flex", alignItems: "center", mb: 3, justifyContent: { xs: 'center', md: 'start' } }}>
                             <EditSquareIcon sx={{ color: "#FFA733", mr: 1, width: '18px', height: '18px' }} />
                             <Typography sx={{ fontSize: "15px", color: "#D6920F" }}>
                                 example@email.com
                             </Typography>
                         </Box>
 
-                        {/* -------- OTP INPUT BOXES -------- */}
-                        <Box sx={{ display: "flex", gap: 2, mb: 4 ,  justifyContent: { xs: 'center', md: 'start' },}}>
+                        <Box sx={{ display: "flex", gap: 2, mb: 4, justifyContent: { xs: 'center', md: 'start' }, }}>
                             {[0, 1, 2, 3].map((i) => (
                                 <TextField
                                     key={i}
@@ -204,14 +191,13 @@ export default function VerifyMail({ open, onClose }: any) {
                                         "&:hover fieldset": {
                                             borderColor: "#DADADA !important",
                                         },
-                                       
+
                                     }}
                                 />
                             ))}
 
                         </Box>
 
-                        {/* Verify Button */}
                         <Button variant="contained" sx={{ borderRadius: 2, fontWeight: 400, width: '100%', }} onClick={handleVerify}>Verify</Button>
 
                         {/* Resend / Didn't get OTP */}
@@ -220,7 +206,6 @@ export default function VerifyMail({ open, onClose }: any) {
                                 mt: 3,
                                 display: "flex",
                                 justifyContent: "space-between",
-                                // fontSize: { xs: "12px", md: "14px" },
                             }}
                         >
                             <Typography sx={{ fontSize: '14px', color: "#757675", cursor: "pointer" }}>
@@ -240,7 +225,6 @@ export default function VerifyMail({ open, onClose }: any) {
                             </Typography>
                         </Box>
 
-                        {/* Return to login */}
                         <Typography
                             sx={{
                                 mt: 3,
@@ -253,44 +237,23 @@ export default function VerifyMail({ open, onClose }: any) {
                                 fontWeight: 600,
                                 fontSize: "14px",
                             }}
+                            onClick={goToLogin}
                         >
                             ← Return to login
                         </Typography>
                     </Box>
                 </Box>
             </Modal>
+
+            <MiniNotification snackbarOpen={verifySnackBar} setSnackbarOpen={setVerifySnackBar} content='Incorrect OTP' color='error' />
+            <MiniNotification snackbarOpen={otpSnackBar} setSnackbarOpen={setotpSnackBar} content='OTP Verified Successfully! 🎉' color='success' />
+            <MiniNotification snackbarOpen={snackOpen} setSnackbarOpen={setSnackOpen} content={`OTP ${otp}`} color='info' origin={{ vertical: "top", horizontal: "right" }} />
         </>
     );
 }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// slotProps={{
-//     input: {
-//         sx: {
-//             textAlign: "center",
-//             fontSize: "20px",
-//             padding: 0,
-//         },
-//         // maxLength: 1,
-//     },
-// }}
 
 
 

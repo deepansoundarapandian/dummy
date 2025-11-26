@@ -14,16 +14,22 @@ import {
 } from "@mui/material";
 import { userData } from "@/context/UserData";
 import { useRouter } from "next/navigation";
+import AlertDialog from "../Notification/AlertDialog";
 
-const ProfileMenu = ({ anchorEl, setAnchorEl, handleLogout }: { anchorEl: any, setAnchorEl: any, handleLogout: any }) => {
+const ProfileMenu = ({ anchorEl, setAnchorEl, handleLogout, openAlert, setOpenAlert }: any) => {
 
     const { setSelected } = userData();
 
-    const router=useRouter();
+    const router = useRouter();
 
     const open = Boolean(anchorEl);
 
-    const handleClose = () => setAnchorEl(null);
+    const handleClose = (label: string) => {
+        if (label === "logout") {
+            setOpenAlert(true);
+        }
+        setAnchorEl(null);
+    };
 
     const profile = (link: string) => {
         setSelected(link);
@@ -31,84 +37,90 @@ const ProfileMenu = ({ anchorEl, setAnchorEl, handleLogout }: { anchorEl: any, s
     }
 
     return (
-        <Menu
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            PaperProps={{
-                sx: {
-                    width: '220px',
-                    borderRadius: "16px",
-                    mt: 1.5,
-                    boxShadow: "0px 10px 30px rgba(0,0,0,0.15)",
-                },
-            }}
-        >
-            <Typography variant="h6"
-                sx={{
-                    padding: "8px 16px 12px 16px",
-                    color: "#00171F",
+        <>
+            <Menu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                PaperProps={{
+                    sx: {
+                        width: '220px',
+                        borderRadius: "16px",
+                        mt: 1.5,
+                        boxShadow: "0px 10px 30px rgba(0,0,0,0.15)",
+                    },
                 }}
             >
-                Hello User
-            </Typography>
+                <Typography variant="h6"
+                    sx={{
+                        padding: "8px 16px 12px 16px",
+                        color: "#00171F",
+                    }}
+                >
+                    Hello User
+                </Typography>
 
-            <Box sx={{ borderBottom: "1px solid #ebebeb", }} />
+                <Box sx={{ borderBottom: "1px solid #ebebeb", }} />
 
-            {/* Menu Items */}
+                {/* Menu Items */}
 
-            {[
-                { icon: <PersonOutlineIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "My Profile", link: 'profile' },
-                { icon: <ShoppingBagOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "My Orders", link: 'orders' },
-                { icon: <FavoriteBorderOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "Wishlist", link: 'wishlist' },
-                { icon: <LocationOnOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "Saved Addresses", link: '/addresses' },
-                { icon: <NotificationsNoneOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "Notifications", link: 'notifications' },
-            ].map((item) => (
+                {[
+                    { icon: <PersonOutlineIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "My Profile", link: 'profile' },
+                    { icon: <ShoppingBagOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "My Orders", link: 'orders' },
+                    { icon: <FavoriteBorderOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "Wishlist", link: 'wishlist' },
+                    { icon: <LocationOnOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "Saved Addresses", link: '/addresses' },
+                    { icon: <NotificationsNoneOutlinedIcon sx={{ width: 20, height: 20, color: "#474847" }} />, label: "Notifications", link: 'notifications' },
+                ].map((item) => (
+                    <MenuItem
+                        key={item.label}
+                        onClick={() => handleClose(item.label)}
+                        sx={{
+                            py: 1.5,
+                            borderRadius: 1,
+                            "&:hover": { backgroundColor: "#f5f5f5" },
+                            borderBottom: '1px solid #E6E6E6'
+                        }}
+                    >
+                        <ListItemIcon sx={{ color: "#002A8A" }}>{item.icon}</ListItemIcon>
+                        <ListItemText
+                            primary={item.label}
+                            primaryTypographyProps={{
+                                fontSize: "14px",
+                                fontWeight: 400,
+                                color: "#474847",
+                            }}
+                            onClick={() => profile(item.link)}
+                        />
+                    </MenuItem>
+                ))}
+
+                {/* Logout */}
                 <MenuItem
-                    key={item.label}
-                    onClick={handleClose}
+                    onClick={()=>handleClose('logout')}
                     sx={{
                         py: 1.5,
                         borderRadius: 1,
-                        "&:hover": { backgroundColor: "#f5f5f5" },
-                        borderBottom: '1px solid #E6E6E6'
+                        "&:hover": { backgroundColor: "#ffe5e5" },
                     }}
                 >
-                    <ListItemIcon sx={{ color: "#002A8A" }}>{item.icon}</ListItemIcon>
+                    <ListItemIcon sx={{ color: "red" }}>
+                        <LogoutOutlinedIcon sx={{ width: 20, height: 20 }} />
+                    </ListItemIcon>
                     <ListItemText
-                        primary={item.label}
+                        primary="Logout"
                         primaryTypographyProps={{
                             fontSize: "14px",
                             fontWeight: 400,
-                            color: "#474847",
+                            color: "red",
                         }}
-                        onClick={()=>profile(item.link)}
                     />
                 </MenuItem>
-            ))}
+            </Menu>
 
-            {/* Logout */}
-            <MenuItem
-                onClick={handleLogout}
-                sx={{
-                    py: 1.5,
-                    borderRadius: 1,
-                    "&:hover": { backgroundColor: "#ffe5e5" },
-                }}
-            >
-                <ListItemIcon sx={{ color: "red" }}>
-                    <LogoutOutlinedIcon sx={{ width: 20, height: 20 }} />
-                </ListItemIcon>
-                <ListItemText
-                    primary="Logout"
-                    primaryTypographyProps={{
-                        fontSize: "14px",
-                        fontWeight: 400,
-                        color: "red",
-                    }}
-                />
-            </MenuItem>
-        </Menu>
+            {
+                openAlert && <AlertDialog openAlert={openAlert} setOpenAlert={setOpenAlert} logOff={handleLogout}/>
+            }
+        </>
     )
 }
 

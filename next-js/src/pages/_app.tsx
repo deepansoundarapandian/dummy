@@ -1,18 +1,17 @@
-import { ThemeProvider } from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
-import theme from '../themes/theme'
-import "@/styles/globals.css";
+import type { AppProps } from "next/app";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer";
-import type { AppProps } from "next/app";
-import { usePathname } from "next/navigation";
-import Container from "@mui/material/Container";
 import LoginModal from "@/components/Authentication/Login";
 import SignupModal from "@/components/Authentication/Signup";
-import { useState } from "react";
 import VerifyMail from "../components/Authentication/VerifyMail";
+import { useState } from "react";
 import { UserDataProvider } from "@/context/UserData";
-import { useMediaQuery } from "@mui/material"
+import { usePathname } from "next/navigation";
+import theme from '../themes/theme'
+import { ThemeProvider } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+import "@/styles/globals.css";
+import Container from "@mui/material/Container";
 
 export default function App({ Component, pageProps }: AppProps) {
 
@@ -21,9 +20,6 @@ export default function App({ Component, pageProps }: AppProps) {
   const [openVerifyMail, setOpenVerifyMail] = useState(false);
 
   const pathname = usePathname();
-
-  // const isMobile = useMediaQuery(theme.breakpoints.down("md"), { noSsr: true });
-
 
   const backgroundProducts = {
     height: "378px",
@@ -37,9 +33,7 @@ export default function App({ Component, pageProps }: AppProps) {
     left: '50%',
     transform: 'translateX(-50%)',
     display: { xs: 'none', md: 'block' }
-
   }
-
 
   const backgroundHome = {
     height: { xs: '350px', md: "695px" },
@@ -51,7 +45,6 @@ export default function App({ Component, pageProps }: AppProps) {
     position: 'absolute',
     left: '50%',
     transform: 'translateX(-50%)'
-
   }
 
   const bgImage =
@@ -59,45 +52,47 @@ export default function App({ Component, pageProps }: AppProps) {
       ? backgroundHome
       : pathname === "/products" ? backgroundProducts : '';
 
+  const loginType = (mode: string) => {
 
-  const signUp = () => {
-    setOpenSignup(true);
-    setOpenLogin(false);
-  }
+    if (mode === "login") {
+      setOpenLogin(true);
+      setOpenSignup(false);
+    } else {
+      setOpenSignup(true);
+      setOpenLogin(false);
+    }
+console.log("");
 
-  const login = () => {
-    setOpenLogin(true);
-    setOpenSignup(false);
-  }
-
-
+  };
 
   return (
     <>
       <ThemeProvider theme={theme}>
+
         <CssBaseline />
+
         <Container maxWidth="xl" sx={{ ...bgImage }}></Container>
 
-        <Container maxWidth="xl">
+          <Container maxWidth="xl" >
 
-          <UserDataProvider>
+            <UserDataProvider>
 
-            <Navbar onOpenLogin={() => setOpenLogin(true)} />
+              <Navbar onOpenLogin={() => setOpenLogin(true)} />
 
+              <LoginModal open={openLogin} onClose={() => setOpenLogin(false)} onOpenSignup={() => loginType("signup")} />
 
-            <LoginModal open={openLogin} onClose={() => setOpenLogin(false)} onOpenSignup={signUp} />
+              <SignupModal open={openSignup} onClose={() => setOpenSignup(false)} onOpenLogin={() => loginType("login")} openMail={() => setOpenVerifyMail(true)} />
 
-            <SignupModal open={openSignup} onClose={() => setOpenSignup(false)} onOpenLogin={login} openMail={() => setOpenVerifyMail(true)} />
+              <VerifyMail open={openVerifyMail} onClose={() => setOpenVerifyMail(false)} openLogin={()=>setOpenLogin(true)}/>
 
-            <VerifyMail open={openVerifyMail} onClose={() => setOpenVerifyMail(false)} />
+              <Component {...pageProps} />
 
-            <Component {...pageProps} />
+            </UserDataProvider>
 
-          </UserDataProvider>
+            <Footer />
 
-          <Footer />
+          </Container>
 
-        </Container>
       </ThemeProvider>
     </>
   );
