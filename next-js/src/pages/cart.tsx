@@ -84,10 +84,10 @@ export default function CartPage() {
                                 p: { xs: 0, md: 2 }, 
                             }}
                         >
-                            {cart.map((item: any) => (
+                            {cart.map((item: any, index: number) => (
                                 <Box key={item.id}>
                                     <CartItems item={item} />
-                                    <Divider variant="middle" />
+                                    {cart.length - 1 === index ? null : <Divider variant="middle" />}
                                 </Box>
                             ))}
                         </Box>

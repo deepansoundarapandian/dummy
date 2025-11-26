@@ -36,7 +36,7 @@ const ProductImage = ({ product, image, setImage }: { product: any, image: any, 
 
             {/* Thumbnails */}
             <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-                {[1, 2, 3, 4, 5].map((v) => (
+                {[1, 2, 3, 4, ].map((v) => (
                     <Paper
                         key={v}
                         elevation={0}
@@ -55,6 +55,23 @@ const ProductImage = ({ product, image, setImage }: { product: any, image: any, 
                         />
                     </Paper>
                 ))}
+                 <Paper
+                        key={product.title}
+                        elevation={0}
+                        sx={{
+                            borderRadius: "10px",
+                            overflow: "hidden",
+                            width: "94px",
+                            height: "94px",
+                        }}
+                    >
+                        <CardMedia
+                            component="img"
+                            src={product.image}
+                            sx={{ width: "100%", height: "100%", objectFit: "contain", cursor: 'pointer' }}
+                            onClick={(e) => getImage(e)}
+                        />
+                    </Paper>
             </Stack>
 
             {/* Health Tags */}

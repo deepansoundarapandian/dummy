@@ -28,6 +28,8 @@ const CartItems = ({ item }: { item: any }) => {
         setCart((prev: any) => prev.filter((item: any) => item.id !== id));
     };
 
+    const checkqty=item.qty<=1;
+
     return (
         <Card
             key={item.id}
@@ -77,7 +79,7 @@ const CartItems = ({ item }: { item: any }) => {
                     <IconButton
                         size="small"
                         sx={{
-                            borderRadius: "6px", bgcolor: '#EBEEEF', "&:hover": {
+                            borderRadius: "6px",  bgcolor: checkqty ? "#EBEEEF" : "primary.main",color:checkqty ? "" : "#EBEEEF", "&:hover": {
                                 bgcolor: '#EBEEEF'
                             }
                         }}

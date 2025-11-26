@@ -17,11 +17,14 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Image from "next/image";
 import Link from "next/link";
 import { userData } from "@/context/UserData";
+import { useRouter } from "next/router";
 
 
 const DesktopNav = ({ setAnchorEl, onOpenLogin, open }: { setAnchorEl: any, onOpenLogin: any, open: any }) => {
 
     const { loggedIn, cart } = userData();
+
+    const router = useRouter();
 
     const list = ["Home", "Category", "About", "Contact"];
 
@@ -82,7 +85,8 @@ const DesktopNav = ({ setAnchorEl, onOpenLogin, open }: { setAnchorEl: any, onOp
 
                                 {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                             </ListItem>
-                            <ListItem sx={{ width: "auto", padding: 0, display:'flex', gap:1 }}>
+                            <ListItem sx={{ width: "auto", padding: 0, display: 'flex', gap: 1, cursor:'pointer' }} onClick={() => router.push("/cart")}>
+                                {/* <Link href="/cart"> */}
                                 <ListItemIcon sx={{ minWidth: "auto", mr: 1 }}>
                                     <Badge badgeContent={cart.length} color="primary">
                                         <ShoppingCartOutlinedIcon
@@ -90,15 +94,16 @@ const DesktopNav = ({ setAnchorEl, onOpenLogin, open }: { setAnchorEl: any, onOp
                                         />
                                     </Badge>
                                 </ListItemIcon>
-                                <Link href="/cart">
-                                    <ListItemText
-                                        primary="Cart"
-                                        sx={{
-                                            "& .MuiTypography-root": { fontWeight: 600 },
-                                            color: 'primary.main'
-                                        }}
-                                    />
-                                </Link>
+
+                                <ListItemText
+                                    primary="Cart"
+                                    sx={{
+                                        "& .MuiTypography-root": { fontWeight: 600 },
+                                        color: 'primary.main'
+                                    }}
+                                />
+
+                                {/* </Link> */}
                             </ListItem>
                         </>
                     ) : ''
