@@ -28,7 +28,7 @@ const CartItems = ({ item }: { item: any }) => {
         setCart((prev: any) => prev.filter((item: any) => item.id !== id));
     };
 
-    const checkqty=item.qty<=1;
+    const checkqty = item.qty <= 1;
 
     return (
         <Card
@@ -46,8 +46,8 @@ const CartItems = ({ item }: { item: any }) => {
             {/* PRODUCT IMAGE */}
             <Box
                 sx={{
-                    width: { xs: 78, md: 145 },   
-                    height: { xs: 78, md: 145 },  
+                    width: { xs: 78, md: 145 },
+                    height: { xs: 78, md: 145 },
                 }}
             >
                 <Image
@@ -79,8 +79,8 @@ const CartItems = ({ item }: { item: any }) => {
                     <IconButton
                         size="small"
                         sx={{
-                            borderRadius: "6px",  bgcolor: checkqty ? "#EBEEEF" : "primary.main",color:checkqty ? "" : "#EBEEEF", "&:hover": {
-                                bgcolor: '#EBEEEF'
+                            borderRadius: "6px", bgcolor: checkqty ? "#EBEEEF" : "primary.main", color: checkqty ? "" : "#EBEEEF", "&:hover": {
+                                bgcolor: checkqty ? '#EBEEEF' : 'primary.main'
                             }
                         }}
                         onClick={() => updateQty(item.id, -1)}
