@@ -193,7 +193,7 @@ export default function VerifyMail({ open, onClose, openLogin }: any) {
                                         },
 
                                     }}
-                                />
+                                />  
                             ))}
 
                         </Box>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Head from "next/head";
 import Image from "next/image";
@@ -9,18 +9,16 @@ import PetCard from "@/components/ProductCard/PetCard";
 import PetProduct from "@/components/ProductCard/PetProduct";
 import PetCardSkeleton from "@/components/Skeleton/PetCardSkeleton";
 import { Container, Typography, Box, Button } from "@mui/material";
-import Grid from '@mui/material/Grid';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Grid from "@mui/material/Grid";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import PZRobotWidget from "@/components/Script/PZRobotWidget";
 
 export default function Home() {
-
   const [data, setData] = useState([]);
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
-
     const fetchData = async () => {
-
       setLoader(true);
       try {
         const response = await axios("https://fakestoreapi.com/products");
@@ -30,15 +28,20 @@ export default function Home() {
       } finally {
         setLoader(false);
       }
-
     };
 
     fetchData();
   }, []);
 
-
   const pets = [1, 2, 3, 4, 5, 6, 7, 8];
-  const petSellers = ['/assets/Frame 41.png', '/assets/image 6.png', '/assets/image 7.png', '/assets/image 9.png', '/assets/image 10.png', '/assets/image 11.png'];
+  const petSellers = [
+    "/assets/Frame 41.png",
+    "/assets/image 6.png",
+    "/assets/image 7.png",
+    "/assets/image 9.png",
+    "/assets/image 10.png",
+    "/assets/image 11.png",
+  ];
 
   return (
     <>
@@ -49,145 +52,191 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div
-      >
-        <Container maxWidth='lg' sx={{ color: 'black', py: '40px', mt: { xs: '260px', md: '600px' } }}>
-
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: '30px', }}>
-
+      <div>
+        <PZRobotWidget /> 
+        <Container
+          maxWidth="lg"
+          sx={{ color: "black", py: "40px", mt: { xs: "260px", md: "600px" } }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              mb: "30px",
+            }}
+          >
             <Box>
-              <Typography variant="caption" sx={{ display: 'block', fontWeight: 500, fontSize: '16px' }}>
+              <Typography
+                variant="caption"
+                sx={{ display: "block", fontWeight: 500, fontSize: "16px" }}
+              >
                 Whats new?
               </Typography>
-              <Typography variant="h3" sx={{ display: 'block', color: 'primary.main', fontSize: { xs: '20px' } }}>
+              <Typography
+                variant="h3"
+                sx={{
+                  display: "block",
+                  color: "primary.main",
+                  fontSize: { xs: "20px" },
+                }}
+              >
                 Take a look at some of our pets
               </Typography>
             </Box>
 
-            <Box sx={{ alignSelf: 'end', display: { xs: 'none', md: 'block' } }}>
-              <Button variant="outlined" endIcon={<ChevronRightIcon />} ><Link href='/products'>View more </Link></Button>
+            <Box
+              sx={{ alignSelf: "end", display: { xs: "none", md: "block" } }}
+            >
+              <Button variant="outlined" endIcon={<ChevronRightIcon />}>
+                <Link href="/products">View more </Link>
+              </Button>
             </Box>
-
           </Box>
 
           <Box>
-
-            <Grid container spacing={2} >
-              {loader ? [1, 2, 3, 4, 5, 6, 7, 8].map((product: any) => (
-                <Grid size={{ xl: 3, md: 4, sm: 6, xs: 6 }}
-                  key={product}
-                >
-                  <PetCardSkeleton />
-                </Grid>
-              )) : (
-                data.map((product: any) => (
-                  <Grid size={{ xl: 3, md: 4, sm: 6, xs: 6 }}
-                    key={product.id}
-                  >
-                    <PetCard pData={product} />
-                  </Grid>
-                ))
-              )}
+            <Grid container spacing={2}>
+              {loader
+                ? [1, 2, 3, 4, 5, 6, 7, 8].map((product: any) => (
+                    <Grid size={{ xl: 3, md: 4, sm: 6, xs: 6 }} key={product}>
+                      <PetCardSkeleton />
+                    </Grid>
+                  ))
+                : data.map((product: any) => (
+                    <Grid
+                      size={{ xl: 3, md: 4, sm: 6, xs: 6 }}
+                      key={product.id}
+                    >
+                      <PetCard pData={product} />
+                    </Grid>
+                  ))}
             </Grid>
-
           </Box>
 
-          <Box sx={{ mt: '50px', borderRadius: '20px', minHeight: '378px', backgroundImage: "url('/assets/Banner.png')", backgroundSize: 'cover', display: { xs: 'none', md: 'block' } }} />
+          <Box
+            sx={{
+              mt: "50px",
+              borderRadius: "20px",
+              minHeight: "378px",
+              backgroundImage: "url('/assets/Banner.png')",
+              backgroundSize: "cover",
+              display: { xs: "none", md: "block" },
+            }}
+          />
 
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'space-between', mb: '30px', mt: '50px' }}>
-
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              justifyContent: "space-between",
+              mb: "30px",
+              mt: "50px",
+            }}
+          >
             <Box>
-              <Typography variant="caption" sx={{ display: { xs: 'none', md: 'block' }, fontWeight: 500, fontSize: '16px' }}>
+              <Typography
+                variant="caption"
+                sx={{
+                  display: { xs: "none", md: "block" },
+                  fontWeight: 500,
+                  fontSize: "16px",
+                }}
+              >
                 Hard to choose right products for your pets?
               </Typography>
-              <Typography variant="h3" sx={{ display: 'block', color: 'primary.main' }}>
+              <Typography
+                variant="h3"
+                sx={{ display: "block", color: "primary.main" }}
+              >
                 Our Products
               </Typography>
             </Box>
 
-            <Box sx={{ alignSelf: 'end' }}>
-              <Button variant="outlined" endIcon={<ChevronRightIcon />}>View more </Button>
+            <Box sx={{ alignSelf: "end" }}>
+              <Button variant="outlined" endIcon={<ChevronRightIcon />}>
+                View more{" "}
+              </Button>
             </Box>
-
           </Box>
 
-          <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-
-            <Grid container spacing={2} >
+          <Box sx={{ display: { xs: "none", md: "block" } }}>
+            <Grid container spacing={2}>
               {pets.map((pet) => (
-                <Grid size={{ xl: 3, md: 4, sm: 6, xs: 12 }}
-                  key={pet}
-                >
+                <Grid size={{ xl: 3, md: 4, sm: 6, xs: 12 }} key={pet}>
                   <PetProduct />
                 </Grid>
               ))}
             </Grid>
-
           </Box>
 
-
-          <Box sx={{ display: { xs: 'block', md: 'none' }, mt: '30px' }}>
-            <Button variant="outlined" sx={{ width: '100%' }} endIcon={<ChevronRightIcon />}><Link href='/products'>View more </Link> </Button>
+          <Box sx={{ display: { xs: "block", md: "none" }, mt: "30px" }}>
+            <Button
+              variant="outlined"
+              sx={{ width: "100%" }}
+              endIcon={<ChevronRightIcon />}
+            >
+              <Link href="/products">View more </Link>{" "}
+            </Button>
           </Box>
 
-
-
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'space-between', mt: '60px' }}>
-
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              justifyContent: "space-between",
+              mt: "60px",
+            }}
+          >
             <Box>
-              <Typography variant="caption" sx={{ fontSize: '16px' }}>Proud to be part of <b style={{ color: "#003459", fontSize: '24px', fontWeight: 700 }}>Pet Sellers</b>
+              <Typography variant="caption" sx={{ fontSize: "16px" }}>
+                Proud to be part of{" "}
+                <b
+                  style={{
+                    color: "#003459",
+                    fontSize: "24px",
+                    fontWeight: 700,
+                  }}
+                >
+                  Pet Sellers
+                </b>
               </Typography>
             </Box>
 
             <Box>
-              <Button variant="outlined" endIcon={<ChevronRightIcon />}>View all our sellers</Button>
+              <Button variant="outlined" endIcon={<ChevronRightIcon />}>
+                View all our sellers
+              </Button>
             </Box>
-
           </Box>
 
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'space-between', my: '30px', alignItems: 'center' }}>
-            {
-              petSellers.map((seller, index) => (
-                <Box key={index}>
-                  <Image src={seller} alt="img" width={88} height={64} />
-                </Box>
-              ))
-            }
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              justifyContent: "space-between",
+              my: "30px",
+              alignItems: "center",
+            }}
+          >
+            {petSellers.map((seller, index) => (
+              <Box key={index}>
+                <Image src={seller} alt="img" width={88} height={64} />
+              </Box>
+            ))}
           </Box>
 
-          <Box sx={{ width: '100%', mt: '50px', borderRadius: '20px', minHeight: { xs: '500px', md: '378px' }, backgroundImage: { xs: "url('/assets/poster.png')", md: "url('/assets/Banner.png')" }, backgroundSize: { xs: 'cover', md: 'cover' }, backgroundRepeat: 'no-repeat' }} />
-
+          <Box
+            sx={{
+              width: "100%",
+              mt: "50px",
+              borderRadius: "20px",
+              minHeight: { xs: "500px", md: "378px" },
+              backgroundImage: {
+                xs: "url('/assets/poster.png')",
+                md: "url('/assets/Banner.png')",
+              },
+              backgroundSize: { xs: "cover", md: "cover" },
+              backgroundRepeat: "no-repeat",
+            }}
+          />
         </Container>
-        
       </div>
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
