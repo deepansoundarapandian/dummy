@@ -109,32 +109,7 @@ LS0tCg==
 
   return (
     <>
-      <Script
-        src="https://pz-script.vercel.app/agent/agent_script/pz-robot.js"
-        strategy="afterInteractive"
-        onLoad={() => {
-          // Optionally handle loaded event
-          console.log("PZ Robot script loaded");
-        }}
-      />
-
-      <Script
-        id="pz-asset-path"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-        (function () {
-          const currentScript = document.currentScript;
-          console.log(currentScript, "currentScript");
-
-          const scriptBase = currentScript.src.replace(/\\/[^\\/]+$/, "");
-          console.log(scriptBase, "scriptBase");
-
-          window.PZ_ASSET_PATH = scriptBase;
-        })();
-      `,
-        }}
-      />
+      <Script src="https://pz-script.vercel.app/agent/agent_script/pz-robot.js" strategy="afterInteractive" />
     </>
 
   );
